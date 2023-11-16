@@ -1,0 +1,77 @@
+{
+    "cores":[
+        {
+            "repository":"https://github.com/riscv-steel/riscv-steel.git",
+            "name":"RISC-V STEEL",
+            "folder":"stell",
+            "files": [
+                "processors/stell/ip/soc/ram_memory.v",
+                "processors/stell/ip/core/rvsteel_core.v",
+                "processors/stell/ip/soc/uart.v",
+                "processors/stell/ip/soc/system_bus.v",
+                "processors/stell/ip/soc/rvsteel_soc.v",
+                "rtl/tools/uart_tx.v",
+                "rtl/tools/uart_rx.v",
+                "rtl/controller_steel.v"
+            ],
+            "constraints": [
+                "serial",
+                "led_n:1"
+            ],
+            "enable": true
+        },
+        {
+            "repository":"https://github.com/liangkangnan/tinyriscv.git",
+            "name":"Tinyriscv",
+            "folder":"tinyriscv",
+            "files": [
+
+            ],
+            "constraints": [
+                "serial"
+            ],
+            "enable": false
+        },
+        {
+            "repository":"https://github.com/veeYceeY/AUK-V-Aethia.git",
+            "name":"Auk-V",
+            "folder":"auk-v",
+            "files": [
+                "processors/auk-v/rtl/core/aukv.v",
+                "processors/auk-v/rtl/core/aukv_alu.v",
+                "processors/auk-v/rtl/core/aukv_csr_regfile.v",
+                "processors/auk-v/rtl/core/aukv_decode.v",
+                "processors/auk-v/rtl/core/aukv_execute.v",
+                "processors/auk-v/rtl/core/aukv_fetch.v",
+                "processors/auk-v/rtl/core/aukv_gpr_regfilie.v",
+                "processors/auk-v/rtl/core/aukv_mem.v",
+                "processors/auk-v/rtl/memory/cache.v",
+                "processors/auk-v/rtl/memory/oc_ram.v",
+                "processors/auk-v/rtl/memory/oc_rom.v",
+                "processors/auk-v/rtl/perhardwareherals/fifo/fifo.v",
+                "processors/auk-v/rtl/perhardwareherals/gpio/gpio.v",
+                "processors/auk-v/rtl/perhardwareherals/uart/baud.v",
+                "processors/auk-v/rtl/perhardwareherals/uart/uart.v",
+                "processors/auk-v/rtl/perhardwareherals/uart/uart_rx.v",
+                "processors/auk-v/rtl/perhardwareherals/uart/uart_tx.v",
+                "processors/auk-v/rtl/soc/aukv_eggs_soc.v",
+                "processors/auk-v/rtl/system/reset_sync.v",
+                "processors/auk-v/rtl/wishbone/wb_arbiter.v",
+                "processors/auk-v/rtl/wishbone/wb_interconnect.v",
+                "processors/auk-v/rtl/wishbone/wb_master.v",
+                "processors/auk-v/rtl/wishbone/wb_switch.v",
+                "rtl/tools/uart_tx.v",
+                "rtl/tools/uart_rx.v",
+                "rtl/controller_auk.v"
+            ],
+            "constraints": [
+                "serial",
+                "led_n:0",
+                "led_n:1",
+                "led_n:2",
+                "led_n:3"
+            ],
+            "enable": false
+        }
+    ]
+}
