@@ -1,6 +1,24 @@
 {
-    "cores":[
-        {
+    "cores":{
+        "Risco-5":{
+            "repository":"https://github.com/JN513/Risco-5.git",
+            "name":"Risco-5",
+            "folder":"Risco-5",
+            "files": [
+                
+            ],
+            "enable": true
+        },
+        "darkriscv":{
+            "repository":"https://github.com/darklife/darkriscv.git",
+            "name":"DarkRISCV",
+            "folder":"darkriscv",
+            "files": [
+                "rtl/darkriscv.v"
+            ],
+            "enable": true
+        },
+        "riscv-steel":{
             "repository":"https://github.com/riscv-steel/riscv-steel.git",
             "name":"RISC-V STEEL",
             "folder":"stell",
@@ -14,25 +32,18 @@
                 "rtl/tools/uart_rx.v",
                 "rtl/controller_steel.v"
             ],
-            "constraints": [
-                "serial",
-                "led_n:1"
-            ],
             "enable": true
         },
-        {
+        "tinyriscv":{
             "repository":"https://github.com/liangkangnan/tinyriscv.git",
             "name":"Tinyriscv",
             "folder":"tinyriscv",
             "files": [
 
             ],
-            "constraints": [
-                "serial"
-            ],
             "enable": false
         },
-        {
+        "aukv":{
             "repository":"https://github.com/veeYceeY/AUK-V-Aethia.git",
             "name":"Auk-V",
             "folder":"auk-v",
@@ -64,14 +75,7 @@
                 "rtl/tools/uart_rx.v",
                 "rtl/controller_auk.v"
             ],
-            "constraints": [
-                "serial",
-                "led_n:0",
-                "led_n:1",
-                "led_n:2",
-                "led_n:3"
-            ],
             "enable": false
         }
-    ]
+    }
 }

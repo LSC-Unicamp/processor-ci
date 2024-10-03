@@ -3,8 +3,8 @@ read_verilog /eda/processor-ci-controller/modules/uart.v
 read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_rx.v
 read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_tx.v
 
-read_verilog /eda/processor-ci-controller/modules/spi.v;
-read_verilog /eda/processor-ci-controller/modules/SPI-Slave/rtl/spi_slave.v;
+#read_verilog /eda/processor-ci-controller/modules/spi.v;
+#read_verilog /eda/processor-ci-controller/modules/SPI-Slave/rtl/spi_slave.v;
 
 read_verilog /eda/processor-ci-controller/src/fifo.v
 read_verilog /eda/processor-ci-controller/src/reset.v

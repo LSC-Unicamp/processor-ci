@@ -1,13 +1,13 @@
 
-read_verilog /eda/processorci-controller/modules/uart.v
-read_verilog /eda/processorci-controller/modules/UART/rtl/uart_rx.v
-read_verilog /eda/processorci-controller/modules/UART/rtl/uart_tx.v
-read_verilog /eda/processorci-controller/src/fifo.v
-read_verilog /eda/processorci-controller/src/reset.v
-read_verilog /eda/processorci-controller/src/clk_divider.v
-read_verilog /eda/processorci-controller/src/memory.v
-read_verilog /eda/processorci-controller/src/interpreter.v
-read_verilog /eda/processorci-controller/src/controller.v
+read_verilog /eda/processor-ci-controller/modules/uart.v
+read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_rx.v
+read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_tx.v
+read_verilog /eda/processor-ci-controller/src/fifo.v
+read_verilog /eda/processor-ci-controller/src/reset.v
+read_verilog /eda/processor-ci-controller/src/clk_divider.v
+read_verilog /eda/processor-ci-controller/src/memory.v
+read_verilog /eda/processor-ci-controller/src/interpreter.v
+read_verilog /eda/processor-ci-controller/src/controller.v
 
 
 read_xdc "/eda/processor-ci/constraints/digilent_nexys4_ddr.xdc"

@@ -1,8 +1,12 @@
-read_verilog /eda/processorci-controller/src/fifo.v
-read_verilog /eda/processorci-controller/src/reset.v
-read_verilog /eda/processorci-controller/src/clk_divider.v
-read_verilog /eda/processorci-controller/src/memory.v
-read_verilog /eda/processorci-controller/src/interpreter.v
-read_verilog /eda/processorci-controller/src/controller.v
+yosys read_verilog /eda/processor-ci-controller/modules/uart.v
+yosys read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_rx.v
+yosys read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_tx.v
 
-synth_ecp5 -json out.json -abc9
+yosys read_verilog /eda/processor-ci-controller/src/fifo.v
+yosys read_verilog /eda/processor-ci-controller/src/reset.v
+yosys read_verilog /eda/processor-ci-controller/src/clk_divider.v
+yosys read_verilog /eda/processor-ci-controller/src/memory.v
+yosys read_verilog /eda/processor-ci-controller/src/interpreter.v
+yosys read_verilog /eda/processor-ci-controller/src/controller.v
+
+yosys synth_ecp5 -json out.json -abc9

@@ -69,11 +69,11 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (memory_read),
+    .core_read_memory      (core_read_data),
     .core_write_memory     (1'b0),
     .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (1'b1)
+    .core_read_data_memory (1'b1),
 
     //sync main memory bus
     .core_read_data_memory_sync     (),
