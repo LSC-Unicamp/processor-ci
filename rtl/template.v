@@ -10,7 +10,9 @@ module top (
 
     // UART pins
     input  wire rx,
-    output wire tx,
+    output wire tx
+    `ifndef DIFERENCIAL_CLK
+    ,
 
     // SPI pins
     input wire sck,
@@ -20,9 +22,8 @@ module top (
 
     //SPI control pins
     input wire rw,
-    output wire intr,
-
-    output wire [7:0]led
+    output wire intr
+    `endif
 );
 
 wire clk_core, reset_core, reset_o,
@@ -33,17 +34,17 @@ wire [31:0] core_read_data, core_write_data, address,
 
 
 Controller #(
-    .CLK_FREQ(25000000),
-    .BIT_RATE(115200),
-    .PAYLOAD_BITS(8),
-    .BUFFER_SIZE(8),
+    .CLK_FREQ          (`CLOCK_FREQ),
+    .BIT_RATE          (115200),
+    .PAYLOAD_BITS      (8),
+    .BUFFER_SIZE       (8),
     .PULSE_CONTROL_BITS(32),
-    .BUS_WIDTH(32),
-    .WORD_SIZE_BY(4),
-    .ID(32'h0000004A),
-    .RESET_CLK_CYCLES(20),
-    .MEMORY_FILE(""),
-    .MEMORY_SIZE(4096)
+    .BUS_WIDTH         (32),
+    .WORD_SIZE_BY      (4),
+    .ID                (0),
+    .RESET_CLK_CYCLES  (20),
+    .MEMORY_FILE       (""),
+    .MEMORY_SIZE       (`MEMORY_SIZE)
 ) Controller(
     `ifdef HIGH_CLK
     .clk  (clk_o),

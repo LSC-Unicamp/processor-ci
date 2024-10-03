@@ -9,7 +9,7 @@ all: out.bit
 
 out.bit:
 	@echo "Building the Design..."
-	$(VIVADO) -mode batch -nolog -nojournal -source $(BUILD_SCRIPT)
+	$(VIVADO) -mode batch -nolog -nojournal -source $(BUILD_SCRIPT) $(MACROS)
 
 clean:
 	@echo "Cleaning the build folder..."

@@ -8,6 +8,22 @@ import subprocess
 CURRENT_DIR = os.getcwd()
 
 
+def get_macros(board: str) -> str:
+    if board == 'colorlight_i9':
+        return '-DID=0x6a6a6a6a -DCLOCK_FREQ=25000000 -DMEMORY_SIZE=4096'
+
+    if board == 'digilent_nexys4_ddr':
+        return '-tclargs "ID=0x6a6a6a6a" "CLOCK_FREQ=50000000" "MEMORY_SIZE=4096"'
+    
+    if board == 'digilent_arty_a7_100t':
+        return '-tclargs "ID=0x6a6a6a6a" "CLOCK_FREQ=50000000" "MEMORY_SIZE=4096"'
+    
+    if board == 'xilinx_vc709':
+        return '-tclargs "ID=0x6a6a6a6a" "CLOCK_FREQ=100000000" "MEMORY_SIZE=4096"'
+    
+    return '-tclargs "ID=0x6a6a6a6a" "CLOCK_FREQ=50000000" "MEMORY_SIZE=4096"'
+
+
 def get_prefix(board: str, vhdl: bool) -> str:
     if board == 'gowin_tangnano_20k':
         return 'add_file'
@@ -70,9 +86,11 @@ def build(build_script_path: str, board: str, toolchain_path: str) -> None:
 
     makefile_path = f'{toolchain_path}/processor-ci/makefiles/{board}.mk'
 
+    macros = get_macros(board)
+
     # Define a variável BUILD_SCRIPT antes do comando make
     process = subprocess.Popen(
-        ['make', '-f', makefile_path, f'BUILD_SCRIPT={build_script_path}'],
+        ['make', '-f', makefile_path, f'BUILD_SCRIPT={build_script_path}', f'MACROS={macros}'],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,

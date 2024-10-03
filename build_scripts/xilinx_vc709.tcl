@@ -1,4 +1,6 @@
 
+set ID 0x6a6a6a6a
+set CLOCK_FREQ 100000000
 
 read_verilog /eda/processor-ci-controller/modules/uart.v
 read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_rx.v
@@ -10,11 +12,15 @@ read_verilog /eda/processor-ci-controller/src/memory.v
 read_verilog /eda/processor-ci-controller/src/interpreter.v
 read_verilog /eda/processor-ci-controller/src/controller.v
 
+set ID [lindex $argv 0]
+set CLOCK_FREQ [lindex $argv 1]
+set MEMORY_SIZE [lindex $argv 2]
+
 read_xdc "/eda/processor-ci/constraints/xilinx_vc709.xdc"
 set_property PROCESSING_ORDER EARLY [get_files /eda/processor-ci/constraints/xilinx_vc709.xdc]
 
 # synth
-synth_design -top "top" -part "xc7vx690tffg1761-2"
+synth_design -top "top" -part "xc7vx690tffg1761-2" -verilog_define $ID -verilog_define $CLOCK_FREQ -verilog_define $MEMORY_SIZE
 
 # place and route
 opt_design

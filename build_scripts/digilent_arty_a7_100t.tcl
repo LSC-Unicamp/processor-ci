@@ -1,4 +1,3 @@
-
 read_verilog /eda/processor-ci-controller/modules/uart.v
 read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_rx.v
 read_verilog /eda/processor-ci-controller/modules/UART/rtl/uart_tx.v
@@ -13,10 +12,14 @@ read_verilog /eda/processor-ci-controller/src/memory.v
 read_verilog /eda/processor-ci-controller/src/interpreter.v
 read_verilog /eda/processor-ci-controller/src/controller.v
 
+set ID [lindex $argv 0]
+set CLOCK_FREQ [lindex $argv 1]
+set MEMORY_SIZE [lindex $argv 2]
+
 read_xdc "/eda/processor-ci/constraints/digilent_arty_a7_100t.xdc"
 
 # synth
-synth_design -top "top" -part "xc7a100tcsg324-1"
+synth_design -top "top" -part "xc7a100tcsg324-1" -verilog_define $ID -verilog_define $CLOCK_FREQ -verilog_define $MEMORY_SIZE
 
 # place and route
 opt_design

@@ -10,7 +10,7 @@ out.config: out.json
 		--detailed-timing-report 
 
 out.json:
-	/eda/oss-cad-suite/bin/yosys -c $(BUILD_SCRIPT)
+	/eda/oss-cad-suite/bin/yosys -c $(BUILD_SCRIPT) $(MACROS)
 
 clean:
 	rm -rf build
