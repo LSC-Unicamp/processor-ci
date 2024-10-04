@@ -41,4 +41,4 @@ report_timing_summary -datasheet -max_paths 10 -file digilent_nexys4ddr_timing.r
 report_power -file digilent_nexys4ddr_power.rpt
 
 # write bitstream
-write_bitstream -force "out.bit"
+write_bitstream -force "digilent_nexys4_ddr.bit"

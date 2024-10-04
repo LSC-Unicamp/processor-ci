@@ -41,6 +41,6 @@ report_timing_summary -datasheet -max_paths 10 -file virtex_timing.rpt
 report_power -file virtex_power.rpt
 
 # write bitstream
-write_bitstream -force "out.bit"
+write_bitstream -force "xilinx_vc709.bit"
 
 exit

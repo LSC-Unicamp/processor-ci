@@ -40,6 +40,6 @@ report_timing_summary -datasheet -max_paths 10 -file digilent_arty_a7_timing.rpt
 report_power -file digilent_arty_a7_power.rpt
 
 # write bitstream
-write_bitstream -force "out.bit"
+write_bitstream -force "digilent_arty_a7_100t.bit"
 
 exit

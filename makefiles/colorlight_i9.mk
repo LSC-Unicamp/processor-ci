@@ -1,21 +1,21 @@
-all: out.bit
+all: colorlight_i9.bit
 
-out.bit: out.config
-	/eda/oss-cad-suite/bin/ecppack --compress --input out.config  --bit out.bit
+colorlight_i9.bit: colorlight_i9.config
+	/eda/oss-cad-suite/bin/ecppack --compress --input colorlight_i9.config  --bit colorlight_i9.bit
 
-out.config: out.json
-	/eda/oss-cad-suite/bin/nextpnr-ecp5 --json out.json --write out_pnr.json --45k \
-		--lpf /eda/processor-ci/constraints/colorlight_i9.lpf --textcfg out.config --package CABGA381 \
+colorlight_i9.config: colorlight_i9.json
+	/eda/oss-cad-suite/bin/nextpnr-ecp5 --json colorlight_i9.json --write colorlight_i9_pnr.json --45k \
+		--lpf /eda/processor-ci/constraints/colorlight_i9.lpf --textcfg colorlight_i9.config --package CABGA381 \
 		--speed 6 --lpf-allow-unconstrained --report report_timing.json \
 		--detailed-timing-report 
 
-out.json:
+colorlight_i9.json:
 	/eda/oss-cad-suite/bin/yosys -c $(BUILD_SCRIPT) $(MACROS)
 
 clean:
 	rm -rf build
 
-flash:
-	/eda/oss-cad-suite/bin/openFPGALoader -b colorlight-i9 out.bit
+load:
+	/eda/oss-cad-suite/bin/openFPGALoader -b colorlight-i9 colorlight_i9.bit
 
-run_all: out.bit flash
+run_all: colorlight_i9.bit load

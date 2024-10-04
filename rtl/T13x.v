@@ -20,32 +20,19 @@ module top (
     input wire mosi,
     output wire miso,
 
-    // SPI control pins
+    //SPI control pins
     input wire rw,
     output wire intr
     `endif
 );
 
-wire clk_core, reset_core,
+wire clk_core, reset_core, reset_o,
     memory_read, memory_write;
 
 wire [31:0] core_read_data, core_write_data, address,
     data_address, data_read, data_write;
 
-// Instância do tinyriscv
-wire [31:0] m0_addr_i, m0_data_i, m0_data_o;
-wire m0_req_i, m0_we_i;
-wire [31:0] m1_addr_i, m1_data_o;
-wire rib_hold_flag_o;
-wire int_flag = 1'b0; // Sinal de interrupção fixo em 0
-wire jtag_reg_addr_o = 1'b0; // Ignorando sinais JTAG
-wire jtag_reg_data_o = 1'b0;
-wire jtag_reg_we_o = 1'b0;
-wire jtag_reg_data_i;
-wire jtag_halt_req_o = 1'b0;
-wire jtag_reset_req_o = 1'b0;
 
-// Instância do controlador
 Controller #(
     .CLK_FREQ          (`CLOCK_FREQ),
     .BIT_RATE          (115200),
@@ -81,15 +68,15 @@ Controller #(
     .clk_core  (clk_core),
     .reset_core(reset_core),
     
-    // Main memory - instruction memory
+    // main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (1'b1),
+    .core_read_memory      (memory_read),
     .core_write_memory     (1'b0),
     .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (core_read_data),
+    .core_read_data_memory (1'b1),
 
-    // Sync main memory bus
+    //sync main memory bus
     .core_read_data_memory_sync     (),
     .core_memory_read_response_sync (),
     .core_memory_write_response_sync(),
@@ -103,28 +90,13 @@ Controller #(
     .core_read_data_memory_data (data_read)
 );
 
-// Instância do tinyriscv
-tinyriscv u_tinyriscv (
-    .clk(clk_core), // Conectando clk_core como clock do processador
-    .rst(reset_core), // Conectando reset_core como reset do processador
-    .rib_ex_addr_o(m0_addr_i),
-    .rib_ex_data_i(m0_data_o),
-    .rib_ex_data_o(m0_data_i),
-    .rib_ex_req_o(m0_req_i),
-    .rib_ex_we_o(m0_we_i),
-    .rib_pc_addr_o(m1_addr_i),
-    .rib_pc_data_i(m1_data_o),
-    .jtag_reg_addr_i(jtag_reg_addr_o),
-    .jtag_reg_data_i(jtag_reg_data_o),
-    .jtag_reg_we_i(jtag_reg_we_o),
-    .jtag_reg_data_o(jtag_reg_data_i),
-    .rib_hold_flag_i(rib_hold_flag_o),
-    .jtag_halt_flag_i(jtag_halt_req_o),
-    .jtag_reset_flag_i(jtag_reset_req_o),
-    .int_i(int_flag)
-);
 
-// Clock infrastructure
+// Core space
+
+
+
+
+// Clock inflaestructure
 
 `ifdef HIGH_CLK
 
@@ -148,6 +120,7 @@ IBUFDS #(
     .IB(clk_ref_n)  // Entrada diferencial negativa
 );
 
+
 always @(posedge clk_ref) begin
     clk_o = ~clk_o;
 end
@@ -159,7 +132,7 @@ end
 
 `endif
 
-// Reset infrastructure
+// Reset Inflaestructure
 
 wire reset_o;
 

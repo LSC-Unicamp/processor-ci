@@ -16,6 +16,22 @@
                 "src/core/pc.v",
                 "src/core/registers.v"
             ],
+            "linguage_version":"2005",
+            "top_module":"soc_tb",
+            "sim_files":[
+                "tests/soc_test.v",
+                "src/peripheral/bus.v",
+                "src/peripheral/fifo.v",
+                "src/peripheral/gpios.v",
+                "src/peripheral/gpio.v",
+                "src/peripheral/leds.v",
+                "src/peripheral/memory.v",
+                "src/peripheral/pwm.v",
+                "src/peripheral/soc.v",
+                "src/peripheral/uart_rx.v",
+                "src/peripheral/uart_tx.v",
+                "src/peripheral/uart.v"
+            ],
             "enable": true
         },
         "darkriscv":{
@@ -25,6 +41,11 @@
             "files": [
                 "rtl/darkriscv.v"
             ],
+            "linguage_version":"2005",
+            "top_module":"core",
+            "sim_files":[
+
+            ],
             "enable": true
         },
         "riscv-steel":{
@@ -32,15 +53,11 @@
             "name":"RISC-V STEEL",
             "folder":"stell",
             "files": [
-                "processors/stell/ip/soc/ram_memory.v",
-                "processors/stell/ip/core/rvsteel_core.v",
-                "processors/stell/ip/soc/uart.v",
-                "processors/stell/ip/soc/system_bus.v",
-                "processors/stell/ip/soc/rvsteel_soc.v",
-                "rtl/tools/uart_tx.v",
-                "rtl/tools/uart_rx.v",
-                "rtl/controller_steel.v"
+                "hardware/core/rvsteel_core.v"
             ],
+            "linguage_version":"2005",
+            "top_module":"rvsteel_core",
+            "sim_files":[],
             "enable": true
         },
         "tinyriscv":{
@@ -48,41 +65,197 @@
             "name":"Tinyriscv",
             "folder":"tinyriscv",
             "files": [
-
+                "rtl/core/clint.v",
+                "rtl/core/csr_reg.v",
+                "rtl/core/ctrl.v",
+                "rtl/core/defines.v",
+                "rtl/core/div.v",
+                "rtl/core/ex.v",
+                "rtl/core/id_ex.v",
+                "rtl/core/id.v",
+                "rtl/core/if_id.v",
+                "rtl/core/pc_reg.v",
+                "rtl/core/regs.v",
+                "rtl/core/rib.v",
+                "rtl/core/tinyriscv.v"
+            ],
+            "top_module":"tinyriscv_soc_tb",
+            "sim_files":
+            [
+                "tb/tinyriscv_soc_tb.v",
+                "rtl/debug/jtag_dm.v",
+                "rtl/debug/jtag_driver.v",
+                "rtl/debug/jtag_top.v",
+                "rtl/debug/uart_debug.v",
+                "rtl/perips/gpio.v",
+                "rtl/perips/ram.v",
+                "rtl/perips/rom.v",
+                "rtl/perips/spi.v",
+                "rtl/perips/timer.v",
+                "rtl/perips/uart.v",
+                "rtl/soc/tinyriscv_soc_top.v",
+                "rtl/utils/full_handshake_rx.v",
+                "rtl/utils/full_handshake_tx.v",
+                "rtl/utils/gen_buf.v",
+                "rtl/utils/gen_dff.v"
+            ],
+            "linguage_version":"2005",              
+            "include_dirs": [
+                "rtl/core"
             ],
             "enable": false
         },
         "aukv":{
             "repository":"https://github.com/veeYceeY/AUK-V-Aethia.git",
-            "name":"Auk-V",
-            "folder":"auk-v",
+            "name":"AUK-V-Aethia",
+            "folder":"AUK-V-Aethia",
             "files": [
-                "processors/auk-v/rtl/core/aukv.v",
-                "processors/auk-v/rtl/core/aukv_alu.v",
-                "processors/auk-v/rtl/core/aukv_csr_regfile.v",
-                "processors/auk-v/rtl/core/aukv_decode.v",
-                "processors/auk-v/rtl/core/aukv_execute.v",
-                "processors/auk-v/rtl/core/aukv_fetch.v",
-                "processors/auk-v/rtl/core/aukv_gpr_regfilie.v",
-                "processors/auk-v/rtl/core/aukv_mem.v",
-                "processors/auk-v/rtl/memory/cache.v",
-                "processors/auk-v/rtl/memory/oc_ram.v",
-                "processors/auk-v/rtl/memory/oc_rom.v",
-                "processors/auk-v/rtl/perhardwareherals/fifo/fifo.v",
-                "processors/auk-v/rtl/perhardwareherals/gpio/gpio.v",
-                "processors/auk-v/rtl/perhardwareherals/uart/baud.v",
-                "processors/auk-v/rtl/perhardwareherals/uart/uart.v",
-                "processors/auk-v/rtl/perhardwareherals/uart/uart_rx.v",
-                "processors/auk-v/rtl/perhardwareherals/uart/uart_tx.v",
-                "processors/auk-v/rtl/soc/aukv_eggs_soc.v",
-                "processors/auk-v/rtl/system/reset_sync.v",
-                "processors/auk-v/rtl/wishbone/wb_arbiter.v",
-                "processors/auk-v/rtl/wishbone/wb_interconnect.v",
-                "processors/auk-v/rtl/wishbone/wb_master.v",
-                "processors/auk-v/rtl/wishbone/wb_switch.v",
-                "rtl/tools/uart_tx.v",
-                "rtl/tools/uart_rx.v",
-                "rtl/controller_auk.v"
+                "rtl/core/aukv.v",
+                "rtl/core/aukv_alu.v",
+                "rtl/core/aukv_csr_regfile.v",
+                "rtl/core/aukv_decode.v",
+                "rtl/core/aukv_execute.v",
+                "rtl/core/aukv_fetch.v",
+                "rtl/core/aukv_gpr_regfilie.v",
+                "rtl/core/aukv_mem.v"
+            ],
+            "linguage_version":"2005",
+            "top_module":"aukv",
+            "sim_files":[
+
+            ],
+            "enable": false
+        },
+        "DV-CPU-RV":{
+            "repository":"https://github.com/devindang/dv-cpu-rv.git",
+            "name":"DV-CPU-RV",
+            "folder":"DV-CPU-RV",
+            "files":[
+                "rtl/rv_alu_ctrl.v",
+                "rtl/rv_alu.v",
+                "rtl/rv_branch_predict.v",
+                "rtl/rv_branch_test.v",
+                "rtl/rv_core.v",
+                "rtl/rv_ctrl.v",
+                "rtl/rv_data_mem.v",
+                "rtl/rv_div.v",
+                "rtl/rv_dpram.v",
+                "rtl/rv_forward.v",
+                "rtl/rv_hzd_detect.v",
+                "rtl/rv_imm_gen.v",
+                "rtl/rv_instr_mem.v",
+                "rtl/rv_mem_map.v",
+                "rtl/rv_mul.v",
+                "rtl/rv_rf.v"
+            ],
+            "linguage_version":"2005",
+            "top_module":"tb_rv_core",
+            "sim_files":[
+                "bench/tb_rv_core.v"
+            ],
+            "enable": false
+        },
+        "F03x":{
+            "repository":"https://github.com/klessydra/F03x.git",
+            "name":"F03x",
+            "folder":"F03x",
+            "files":[
+                "klessydra-f0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd",
+                "klessydra-f0-3th/PKG_RiscV_Klessydra.vhd",
+                "klessydra-f0-3th/TMR_REG_PKG.vhd",
+                "klessydra-f0-3th/RTL-CSR_Unit_TMR.vhd",
+                "klessydra-f0-3th/RTL-Debug_Unit.vhd",
+                "klessydra-f0-3th/RTL-Processing_Pipeline_TMR.vhd",
+                "klessydra-f0-3th/RTL-Program_Counter_unit_TMR.vhd",
+                "klessydra-f0-3th/CMP-TMR_REG.vhd",
+                "klessydra-f0-3th/STR-Klessydra_top.vhd"
+            ],
+            "linguage_version":"08",
+            "top_module":"",
+            "sim_files":[
+
+            ],
+            "enable": false
+        },
+        "T02x":{
+            "repository":"https://github.com/klessydra/T02x.git",
+            "name":"T02x",
+            "folder":"T02x",
+            "files":[
+                "klessydra-t0-2th/PKG_RiscV_Klessydra_thread_parameters.vhd",
+                "klessydra-t0-2th/PKG_RiscV_Klessydra.vhd",
+                "klessydra-t0-2th/RTL-CSR_Unit.vhd",
+                "klessydra-t0-2th/RTL-Debug_Unit.vhd",
+                "klessydra-t0-2th/RTL-Processing_Pipeline.vhd",
+                "klessydra-t0-2th/RTL-Program_Counter_unit.vhd",
+                "klessydra-t0-2th/STR-Klessydra_top.vhd"
+            ],
+            "linguage_version":"08",
+            "top_module":"",
+            "sim_files":[
+
+            ],
+            "enable": false
+        },
+        "T03x":{
+            "repository":"https://github.com/klessydra/T03x.git",
+            "name":"T03x",
+            "folder":"T03x",
+            "files":[
+                "klessydra-t0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd",
+                "klessydra-t0-3th/PKG_RiscV_Klessydra.vhd",
+                "klessydra-t0-3th/RTL-CSR_Unit.vhd",
+                "klessydra-t0-3th/RTL-Debug_Unit.vhd",
+                "klessydra-t0-3th/RTL-Processing_Pipeline.vhd",
+                "klessydra-t0-3th/RTL-Program_Counter_unit.vhd",
+                "klessydra-t0-3th/STR-Klessydra_top.vhd"
+            ],
+            "linguage_version":"08",
+            "top_module":"",
+            "sim_files":[
+
+            ],
+            "enable": false
+        },
+        "T13x":{
+            "repository":"https://github.com/klessydra/T13x.git",
+            "name":"T13x",
+            "folder":"T13x",
+            "files":[
+                "klessydra-t1-3th/PKG_RiscV_Klessydra.vhd",
+                "klessydra-t1-3th/RTL-Accumulator.vhd",
+                "klessydra-t1-3th/RTL-CSR_Unit.vhd",
+                "klessydra-t1-3th/RTL-Debug_Unit.vhd",
+                "klessydra-t1-3th/RTL-DSP_Unit.vhd",
+                "klessydra-t1-3th/RTL-Scratchpad_Memory.vhd",
+                "klessydra-t1-3th/RTL-Scratchpad_Memory_Interface.vhd",
+                "klessydra-t1-3th/RTL-Program_Counter_unit.vhd",
+                "klessydra-t1-3th/RTL-IF_STAGE.vhd",
+                "klessydra-t1-3th/RTL-ID_STAGE.vhd",
+                "klessydra-t1-3th/RTL-IE_STAGE.vhd",
+                "klessydra-t1-3th/RTL-Load_Store_Unit.vhd",
+                "klessydra-t1-3th/RTL-Processing_Pipeline.vhd",
+                "klessydra-t1-3th/STR-Klessydra_top.vhd",
+                "klessydra-t1-3th/RTL-Registerfile.vhd"
+            ],
+            "linguage_version":"08",
+            "top_module":"",
+            "sim_files":[
+
+            ],
+            "enable": false
+        },
+        "template":{
+            "repository":"",
+            "name":"template",
+            "folder":"template",
+            "files":[
+
+            ],
+            "linguage_version":"2005",
+            "top_module":"template",
+            "sim_files":[
+
             ],
             "enable": false
         }

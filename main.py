@@ -80,7 +80,7 @@ def make_build_file(config: dict, board: str, toolchain_path: str) -> str:
     return final_config_path
 
 
-def build(build_script_path: str, board: str, toolchain_path: str) -> None:
+def build_and_flash(build_script_path: str, board: str, toolchain_path: str) -> None:
     if toolchain_path[-1] == '/':
         toolchain_path = toolchain_path[:-1]
 
@@ -108,6 +108,28 @@ def build(build_script_path: str, board: str, toolchain_path: str) -> None:
         print('Erro ao executar o Makefile.')
         print(stderr)
         raise subprocess.CalledProcessError(process.returncode, 'make')
+    
+    process = subprocess.Popen(
+        ['make', '-f', makefile_path, 'load'],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    # Captura a saída e os erros
+
+    stdout, stderr = process.communicate()
+
+    # Verifica o status da execução
+    if process.returncode == 0:
+        print('Makefile executado com sucesso.')
+        print('Saída do Makefile:')
+        print(stdout)
+    else:
+        print('Erro ao executar o Makefile.')
+        print(stderr)
+        raise subprocess.CalledProcessError(process.returncode, 'make')
+
 
 
 def load_config(config_path: str) -> dict:
@@ -160,7 +182,7 @@ def main(
     
     build_file_path = make_build_file(processor_data, board_name, toolchain_path)
 
-    build(build_file_path, board_name, toolchain_path)
+    build_and_flash(build_file_path, board_name, toolchain_path)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

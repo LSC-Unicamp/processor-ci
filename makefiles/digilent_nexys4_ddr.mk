@@ -5,9 +5,9 @@ else
 endif
 
 
-all: out.bit
+all: digilent_nexys4_ddr.bit
 
-out.bit:
+digilent_nexys4_ddr.bit:
 	@echo "Building the Design..."
 	$(VIVADO) -mode batch -nolog -nojournal -source $(BUILD_SCRIPT) $(MACROS)
 
@@ -15,8 +15,8 @@ clean:
 	@echo "Cleaning the build folder..."
 	rm -rf build
 
-flash:
+load:
 	@echo "Flashing the FPGA..."
-	/eda/oss-cad-suite/bin/openFPGALoader -b nexys_a7_100 out.bit
+	/eda/oss-cad-suite/bin/openFPGALoader -b nexys_a7_100 digilent_nexys4_ddr.bit
 
-run_all: out.bit flash
+run_all: digilent_nexys4_ddr.bit load
