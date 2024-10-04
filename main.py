@@ -80,7 +80,7 @@ def make_build_file(config: dict, board: str, toolchain_path: str) -> str:
     return final_config_path
 
 
-def build_and_flash(build_script_path: str, board: str, toolchain_path: str) -> None:
+def build(build_script_path: str, board: str, toolchain_path: str) -> None:
     if toolchain_path[-1] == '/':
         toolchain_path = toolchain_path[:-1]
 
@@ -109,6 +109,13 @@ def build_and_flash(build_script_path: str, board: str, toolchain_path: str) -> 
         print(stderr)
         raise subprocess.CalledProcessError(process.returncode, 'make')
     
+
+def flash(board: str, toolchain_path: str) -> None:
+    if toolchain_path[-1] == '/':
+        toolchain_path = toolchain_path[:-1]
+
+    makefile_path = f'{toolchain_path}/processor-ci/makefiles/{board}.mk'
+    
     process = subprocess.Popen(
         ['make', '-f', makefile_path, 'load'],
         stdout=subprocess.PIPE,
@@ -129,6 +136,7 @@ def build_and_flash(build_script_path: str, board: str, toolchain_path: str) -> 
         print('Erro ao executar o Makefile.')
         print(stderr)
         raise subprocess.CalledProcessError(process.returncode, 'make')
+
 
 
 
@@ -170,7 +178,7 @@ def get_processor_data(config: dict, processor_name: str) -> dict:
 
 
 def main(
-    config_path: str, processor_name: str, board_name: str, toolchain_path: str
+    config_path: str, processor_name: str, board_name: str, toolchain_path: str, load: bool = False
 ) -> None:
     # Carrega o arquivo de configuração
     config = load_config(config_path)
@@ -182,7 +190,10 @@ def main(
     
     build_file_path = make_build_file(processor_data, board_name, toolchain_path)
 
-    build_and_flash(build_file_path, board_name, toolchain_path)
+    if load:
+        flash(board_name, toolchain_path)
+    else:
+        build(build_file_path, board_name, toolchain_path)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -222,6 +233,14 @@ if __name__ == '__main__':
         help='Caminho para as toolchains (padrão: /eda).',
     )
 
+    # Parâmetro opcional para carregar o bitstream
+    parser.add_argument(
+        '-l',
+        '--load',
+        action='store_true',
+        help='Carregar o bitstream na FPGA.',
+    )
+
     # Parse dos argumentos
     args = parser.parse_args()
 
@@ -231,4 +250,5 @@ if __name__ == '__main__':
         args.processor,
         args.board,
         args.toolchain,
+        args.load,
     )

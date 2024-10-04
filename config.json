@@ -48,12 +48,12 @@
                 "rtl/darkriscv.v"
             ],
             "language_version":"2005",
-            "top_module":"core",
+            "top_module":"darkriscv",
             "sim_files":[
 
             ],
             "include_dirs": [
-                
+                "rtl/"
             ],
             "extra_flags": [
 
@@ -62,7 +62,7 @@
         },
         "riscv-steel":{
             "repository":"https://github.com/riscv-steel/riscv-steel.git",
-            "name":"RISC-V STEEL",
+            "name":"RISC-V-STEEL",
             "folder":"stell",
             "files": [
                 "hardware/core/rvsteel_core.v"
@@ -126,7 +126,7 @@
             ],
             "enable": false
         },
-        "aukv":{
+        "AUK-V-Aethia":{
             "repository":"https://github.com/veeYceeY/AUK-V-Aethia.git",
             "name":"AUK-V-Aethia",
             "folder":"AUK-V-Aethia",

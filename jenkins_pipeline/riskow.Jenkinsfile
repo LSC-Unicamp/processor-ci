@@ -4,15 +4,15 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                sh 'rm -rf T13x'
-                sh 'git clone --recursive https://github.com/klessydra/T13x.git T13x'
+                sh 'rm -rf riskow'
+                sh 'git clone --recursive https://github.com/racerxdl/riskow.git riskow'
             }
         }
 
         stage('Simulation') {
             steps {
-                dir("T13x") {
-                    sh "ghdl -a --std=08   klessydra-t1-3th/PKG_RiscV_Klessydra.vhd klessydra-t1-3th/RTL-Accumulator.vhd klessydra-t1-3th/RTL-CSR_Unit.vhd klessydra-t1-3th/RTL-Debug_Unit.vhd klessydra-t1-3th/RTL-DSP_Unit.vhd klessydra-t1-3th/RTL-Scratchpad_Memory.vhd klessydra-t1-3th/RTL-Scratchpad_Memory_Interface.vhd klessydra-t1-3th/RTL-Program_Counter_unit.vhd klessydra-t1-3th/RTL-IF_STAGE.vhd klessydra-t1-3th/RTL-ID_STAGE.vhd klessydra-t1-3th/RTL-IE_STAGE.vhd klessydra-t1-3th/RTL-Load_Store_Unit.vhd klessydra-t1-3th/RTL-Processing_Pipeline.vhd klessydra-t1-3th/STR-Klessydra_top.vhd klessydra-t1-3th/RTL-Registerfile.vhd "
+                dir("riskow") {
+                    sh "iverilog -o simulation.out -g2005  -s top  top.v cpu/cpu.v cpu/alu.v cpu/instruction_decoder.v cpu/program_counter.v cpu/register_bank.v devices/digital_port.v devices/timer.v  && vvp simulation.out"
                 }
             }
         }
@@ -27,24 +27,24 @@ pipeline {
                     stages {
                         stage('Síntese e PnR') {
                             steps {
-                                dir("T13x") {
+                                dir("riskow") {
                                     echo 'Iniciando síntese para FPGA colorlight_i9.'
-                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p T13x -b colorlight_i9'
+                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p riskow -b colorlight_i9'
                                 }
                             }
                         }
                         stage('Flash colorlight_i9') {
                             steps {
-                                dir("T13x") {
+                                dir("riskow") {
                                     echo 'FPGA colorlight_i9 bloqueada para flash.'
-                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p T13x -b colorlight_i9 -l'
+                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p riskow -b colorlight_i9 -l'
                                 }
                             }
                         }
                         stage('Teste colorlight_i9') {
                             steps {
                                 echo 'Testando FPGA colorlight_i9.'
-                                dir("T13x") {
+                                dir("riskow") {
                                     // Insira aqui os comandos de teste necessários
                                 }
                             }
@@ -59,24 +59,24 @@ pipeline {
                     stages {
                         stage('Síntese e PnR') {
                             steps {
-                                dir("T13x") {
+                                dir("riskow") {
                                     echo 'Iniciando síntese para FPGA digilent_nexys4_ddr.'
-                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p T13x -b digilent_nexys4_ddr'
+                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p riskow -b digilent_nexys4_ddr'
                                 }
                             }
                         }
                         stage('Flash digilent_nexys4_ddr') {
                             steps {
-                                dir("T13x") {
+                                dir("riskow") {
                                     echo 'FPGA digilent_nexys4_ddr bloqueada para flash.'
-                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p T13x -b digilent_nexys4_ddr -l'
+                                    sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json -p riskow -b digilent_nexys4_ddr -l'
                                 }
                             }
                         }
                         stage('Teste digilent_nexys4_ddr') {
                             steps {
                                 echo 'Testando FPGA digilent_nexys4_ddr.'
-                                dir("T13x") {
+                                dir("riskow") {
                                     // Insira aqui os comandos de teste necessários
                                 }
                             }
@@ -88,7 +88,7 @@ pipeline {
     }
     post {
         always {
-            dir("T13x") {
+            dir("riskow") {
                 sh 'rm -rf *'
             }
         }

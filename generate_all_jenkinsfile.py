@@ -6,7 +6,7 @@ from main import load_config, get_processor_data
 
 BASE_DIR = "jenkins_pipeline/"
 FPGAs = [
-            "colorlight_i9",
+        "colorlight_i9",
         "digilent_nexys4_ddr",
         #"gowin_tangnano_20k",
         #"xilinx_vc709",
@@ -19,7 +19,7 @@ def main() -> None:
 
     for key in config["cores"].keys():
         processor_data = get_processor_data(config, key)
-        generate_jenkinsfile(processor_data, FPGAs, 'main_script_path', processor_data['language_version'])
+        generate_jenkinsfile(processor_data, FPGAs, main_script_path, processor_data['language_version'], processor_data['extra_flags'])
         os.rename('Jenkinsfile', f'{BASE_DIR}{processor_data["name"]}.Jenkinsfile')
 
     print("Jenkinsfiles generated successfully.")
