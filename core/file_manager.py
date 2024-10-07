@@ -60,7 +60,9 @@ def is_testbench_file(file_path, repo_name):
     # Verificando se alguma parte do caminho contém palavras-chave
     for part in directory_parts:
         if re.search(
-            r"(tests?|testbenches?|testbenchs?|simulations?|tb|sim|verif)", part, re.IGNORECASE
+            r"(tests?|testbenches?|testbenchs?|simulations?|tb|sim|verif)",
+            part,
+            re.IGNORECASE,
         ):
             return True
 
