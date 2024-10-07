@@ -8,7 +8,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 # Constante com o diretório de destino
-DESTINATION_DIR = "./"
+DESTINATION_DIR = "./temp"
 
 
 def clone_repo(url, repo_name):

@@ -20,6 +20,17 @@ def load_config(config_path: str) -> dict:
     return config_data
 
 
+def save_config(config_path: str, config_data: dict) -> None:
+    """
+    Salva o dicionário de configuração no arquivo JSON especificado.
+
+    :param config_path: Caminho para o arquivo de configuração JSON.
+    :param config_data: Dicionário de dados de configuração a ser salvo.
+    """
+    with open(config_path, "w") as file:
+        json.dump(config_data, file, indent=4)
+
+
 def get_processor_data(config: dict, processor_name: str) -> dict:
     """
     Busca os dados do processador pelo nome no arquivo de configuração.

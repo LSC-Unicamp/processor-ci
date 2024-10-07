@@ -1,9 +1,9 @@
 {
-    "cores":{
-        "Risco-5":{
-            "repository":"https://github.com/JN513/Risco-5.git",
-            "name":"Risco-5",
-            "folder":"Risco-5",
+    "cores": {
+        "Risco-5": {
+            "repository": "https://github.com/JN513/Risco-5.git",
+            "name": "Risco-5",
+            "folder": "Risco-5",
             "files": [
                 "src/core/alu.v",
                 "src/core/alu_control.v",
@@ -16,9 +16,9 @@
                 "src/core/pc.v",
                 "src/core/registers.v"
             ],
-            "language_version":"2005",
-            "top_module":"soc_tb",
-            "sim_files":[
+            "language_version": "2005",
+            "top_module": "soc_tb",
+            "sim_files": [
                 "tests/soc_test.v",
                 "src/peripheral/bus.v",
                 "src/peripheral/fifo.v",
@@ -32,56 +32,44 @@
                 "src/peripheral/uart_tx.v",
                 "src/peripheral/uart.v"
             ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-                
-            ],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": true
         },
-        "darkriscv":{
-            "repository":"https://github.com/darklife/darkriscv.git",
-            "name":"DarkRISCV",
-            "folder":"darkriscv",
+        "darkriscv": {
+            "repository": "https://github.com/darklife/darkriscv.git",
+            "name": "DarkRISCV",
+            "folder": "darkriscv",
             "files": [
                 "rtl/darkriscv.v"
             ],
-            "language_version":"2005",
-            "top_module":"darkriscv",
-            "sim_files":[
-
-            ],
+            "language_version": "2005",
+            "top_module": "darkriscv",
+            "sim_files": [],
             "include_dirs": [
                 "rtl/"
             ],
-            "extra_flags": [
-
-            ],
+            "extra_flags": [],
             "enable": true
         },
-        "riscv-steel":{
-            "repository":"https://github.com/riscv-steel/riscv-steel.git",
-            "name":"RISC-V-STEEL",
-            "folder":"stell",
+        "riscv-steel": {
+            "repository": "https://github.com/riscv-steel/riscv-steel.git",
+            "name": "RISC-V-STEEL",
+            "folder": "stell",
             "files": [
                 "hardware/core/rvsteel_core.v"
             ],
-            "language_version":"2005",
-            "top_module":"rvsteel_core",
-            "sim_files":[],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "2005",
+            "top_module": "rvsteel_core",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": true
         },
-        "tinyriscv":{
-            "repository":"https://github.com/liangkangnan/tinyriscv.git",
-            "name":"Tinyriscv",
-            "folder":"tinyriscv",
+        "tinyriscv": {
+            "repository": "https://github.com/liangkangnan/tinyriscv.git",
+            "name": "Tinyriscv",
+            "folder": "tinyriscv",
             "files": [
                 "rtl/core/clint.v",
                 "rtl/core/csr_reg.v",
@@ -97,9 +85,8 @@
                 "rtl/core/rib.v",
                 "rtl/core/tinyriscv.v"
             ],
-            "top_module":"tinyriscv_soc_tb",
-            "sim_files":
-            [
+            "top_module": "tinyriscv_soc_tb",
+            "sim_files": [
                 "tb/tinyriscv_soc_tb.v",
                 "rtl/debug/jtag_dm.v",
                 "rtl/debug/jtag_driver.v",
@@ -117,19 +104,17 @@
                 "rtl/utils/gen_buf.v",
                 "rtl/utils/gen_dff.v"
             ],
-            "language_version":"2005",              
+            "language_version": "2005",
             "include_dirs": [
                 "rtl/core"
             ],
-            "extra_flags": [
-
-            ],
+            "extra_flags": [],
             "enable": false
         },
-        "AUK-V-Aethia":{
-            "repository":"https://github.com/veeYceeY/AUK-V-Aethia.git",
-            "name":"AUK-V-Aethia",
-            "folder":"AUK-V-Aethia",
+        "AUK-V-Aethia": {
+            "repository": "https://github.com/veeYceeY/AUK-V-Aethia.git",
+            "name": "AUK-V-Aethia",
+            "folder": "AUK-V-Aethia",
             "files": [
                 "rtl/core/aukv.v",
                 "rtl/core/aukv_alu.v",
@@ -140,24 +125,18 @@
                 "rtl/core/aukv_gpr_regfilie.v",
                 "rtl/core/aukv_mem.v"
             ],
-            "language_version":"2005",
-            "top_module":"aukv",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "2005",
+            "top_module": "aukv",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "DV-CPU-RV":{
-            "repository":"https://github.com/devindang/dv-cpu-rv.git",
-            "name":"DV-CPU-RV",
-            "folder":"DV-CPU-RV",
-            "files":[
+        "DV-CPU-RV": {
+            "repository": "https://github.com/devindang/dv-cpu-rv.git",
+            "name": "DV-CPU-RV",
+            "folder": "DV-CPU-RV",
+            "files": [
                 "rtl/rv_alu_ctrl.v",
                 "rtl/rv_alu.v",
                 "rtl/rv_branch_predict.v",
@@ -175,24 +154,20 @@
                 "rtl/rv_mul.v",
                 "rtl/rv_rf.v"
             ],
-            "language_version":"2005",
-            "top_module":"tb_rv_core",
-            "sim_files":[
+            "language_version": "2005",
+            "top_module": "tb_rv_core",
+            "sim_files": [
                 "bench/tb_rv_core.v"
             ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "F03x":{
-            "repository":"https://github.com/klessydra/F03x.git",
-            "name":"F03x",
-            "folder":"F03x",
-            "files":[
+        "F03x": {
+            "repository": "https://github.com/klessydra/F03x.git",
+            "name": "F03x",
+            "folder": "F03x",
+            "files": [
                 "klessydra-f0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd",
                 "klessydra-f0-3th/PKG_RiscV_Klessydra.vhd",
                 "klessydra-f0-3th/TMR_REG_PKG.vhd",
@@ -203,24 +178,18 @@
                 "klessydra-f0-3th/CMP-TMR_REG.vhd",
                 "klessydra-f0-3th/STR-Klessydra_top.vhd"
             ],
-            "language_version":"08",
-            "top_module":"",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "08",
+            "top_module": "",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "T02x":{
-            "repository":"https://github.com/klessydra/T02x.git",
-            "name":"T02x",
-            "folder":"T02x",
-            "files":[
+        "T02x": {
+            "repository": "https://github.com/klessydra/T02x.git",
+            "name": "T02x",
+            "folder": "T02x",
+            "files": [
                 "klessydra-t0-2th/PKG_RiscV_Klessydra_thread_parameters.vhd",
                 "klessydra-t0-2th/PKG_RiscV_Klessydra.vhd",
                 "klessydra-t0-2th/RTL-CSR_Unit.vhd",
@@ -229,24 +198,18 @@
                 "klessydra-t0-2th/RTL-Program_Counter_unit.vhd",
                 "klessydra-t0-2th/STR-Klessydra_top.vhd"
             ],
-            "language_version":"08",
-            "top_module":"",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "08",
+            "top_module": "",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "T03x":{
-            "repository":"https://github.com/klessydra/T03x.git",
-            "name":"T03x",
-            "folder":"T03x",
-            "files":[
+        "T03x": {
+            "repository": "https://github.com/klessydra/T03x.git",
+            "name": "T03x",
+            "folder": "T03x",
+            "files": [
                 "klessydra-t0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd",
                 "klessydra-t0-3th/PKG_RiscV_Klessydra.vhd",
                 "klessydra-t0-3th/RTL-CSR_Unit.vhd",
@@ -255,24 +218,18 @@
                 "klessydra-t0-3th/RTL-Program_Counter_unit.vhd",
                 "klessydra-t0-3th/STR-Klessydra_top.vhd"
             ],
-            "language_version":"08",
-            "top_module":"",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "08",
+            "top_module": "",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "T13x":{
-            "repository":"https://github.com/klessydra/T13x.git",
-            "name":"T13x",
-            "folder":"T13x",
-            "files":[
+        "T13x": {
+            "repository": "https://github.com/klessydra/T13x.git",
+            "name": "T13x",
+            "folder": "T13x",
+            "files": [
                 "klessydra-t1-3th/PKG_RiscV_Klessydra.vhd",
                 "klessydra-t1-3th/RTL-Accumulator.vhd",
                 "klessydra-t1-3th/RTL-CSR_Unit.vhd",
@@ -289,70 +246,61 @@
                 "klessydra-t1-3th/STR-Klessydra_top.vhd",
                 "klessydra-t1-3th/RTL-Registerfile.vhd"
             ],
-            "language_version":"08",
-            "top_module":"",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "08",
+            "top_module": "",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": false
         },
-        "riscado-v":{
-            "repository":"https://github.com/zxmarcos/riscado-v.git",
-            "name":"riscado-v",
-            "folder":"riscado-v",
-            "files":
-            [
-                "riscv.v",
+        "riscado-v": {
+            "name": "riscado-v",
+            "folder": "riscado-v",
+            "sim_files": [
+                "ram_tb.v",
+                "soctop_tb.v"
+            ],
+            "files": [
+                "RISCV_SOC.v",
                 "alu.v",
+                "clk_divider.v",
                 "control_unit.v",
+                "gpu.v",
                 "load_store.v",
                 "program_counter.v",
-                "register_file.v"
+                "ram.v",
+                "register_file.v",
+                "riscv.v",
+                "rom.v",
+                "soctop.v",
+                "vga_encoder.v",
+                "vram.v"
             ],
-            "language_version": "2005",
-            "top_module":"RISCV",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
-            "enable": true
+            "include_dirs": [],
+            "repository": "https://github.com/zxmarcos/riscado-v.git",
+            "top_module": "",
+            "extra_flags": [],
+            "language_version": "2005"
         },
-        "rv3n":{
-            "repository":"https://github.com/risclite/rv3n.git",
-            "name":"rv3n",
-            "folder":"rv3n",
-            "files":[
+        "rv3n": {
+            "repository": "https://github.com/risclite/rv3n.git",
+            "name": "rv3n",
+            "folder": "rv3n",
+            "files": [
                 "rtl/rv3n_csr.v"
             ],
-            "language_version":"2005",
-            "top_module":"rv3n_csr",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "2005",
+            "top_module": "rv3n_csr",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": true
         },
-        "riskow":{
-            "repository":"https://github.com/racerxdl/riskow.git",
-            "name":"riskow",
-            "folder":"riskow",
-            "files":[
+        "riskow": {
+            "repository": "https://github.com/racerxdl/riskow.git",
+            "name": "riskow",
+            "folder": "riskow",
+            "files": [
                 "top.v",
                 "cpu/cpu.v",
                 "cpu/alu.v",
@@ -362,78 +310,44 @@
                 "devices/digital_port.v",
                 "devices/timer.v"
             ],
-            "language_version":"2005",
-            "top_module":"top",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-                
-            ],
-            "extra_flags": [
-
-            ],
+            "language_version": "2005",
+            "top_module": "top",
+            "sim_files": [],
+            "include_dirs": [],
+            "extra_flags": [],
             "enable": true
         },
-        "raven-picorv32":{
-            "repository":"https://github.com/efabless/raven-picorv32.git",
-            "name":"raven-picorv32",
-            "folder":"raven-picorv32",
-            "files":[
+        "raven-picorv32": {
+            "repository": "https://github.com/efabless/raven-picorv32.git",
+            "name": "raven-picorv32",
+            "folder": "raven-picorv32",
+            "files": [
                 "verilog/raven_soc.v"
             ],
-            "language_version":"2005",
-            "top_module":"raven_soc",
-            "sim_files":[
-
-            ],
+            "language_version": "2005",
+            "top_module": "raven_soc",
+            "sim_files": [],
             "include_dirs": [
                 "verilog"
             ],
-            "extra_flags": [
-
-            ],
+            "extra_flags": [],
             "enable": false
         },
-        "biriscv":{
-            "repository":"https://github.com/ultraembedded/biriscv.git",
-            "name":"biriscv",
-            "folder":"biriscv",
-            "files":[
+        "biriscv": {
+            "repository": "https://github.com/ultraembedded/biriscv.git",
+            "name": "biriscv",
+            "folder": "biriscv",
+            "files": [
                 "src/core/biriscv_csr.v",
                 "src/core/biriscv_csr_regfile.v"
             ],
-            "language_version":"2005",
-            "top_module":"biriscv_csr",
-            "sim_files":[
-
-            ],
+            "language_version": "2005",
+            "top_module": "biriscv_csr",
+            "sim_files": [],
             "include_dirs": [
                 "src/core"
             ],
-            "extra_flags": [
-
-            ],
-            "enable": false
-        },
-        "template":{
-            "repository":"",
-            "name":"template",
-            "folder":"template",
-            "files":[
-
-            ],
-            "language_version":"2005",
-            "top_module":"template",
-            "sim_files":[
-
-            ],
-            "include_dirs": [
-
-            ],
-            "extra_flags": [
-
-            ],
+            "extra_flags": [],
             "enable": false
         }
     }
