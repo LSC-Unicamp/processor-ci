@@ -27,12 +27,23 @@ def remove_repo(repo_name):
     shutil.rmtree(destination_path)
 
 
-def find_files_with_extension(directory, extensions):
+def find_files_with_extension(directory, extensions) -> tuple[list, str]:
     """Encontra arquivos com extensões específicas em um diretório."""
+    extension = ".v"
     files = []
     for extension in extensions:
         files.extend(glob.glob(f"{directory}/**/*.{extension}", recursive=True))
-    return files
+
+    if ".sv" in files[0]:
+        extension = ".sv"
+    elif ".vhdl" in files[0]:
+        extension = ".vhdl"
+    elif ".vhd" in files[0]:
+        extension = ".vhd"
+    elif ".v" in files[0]:
+        extension = ".v"
+
+    return files, extension
 
 
 def is_testbench_file(file_path, repo_name):
@@ -43,13 +54,13 @@ def is_testbench_file(file_path, repo_name):
     directory_parts = os.path.dirname(relative_path).split(os.sep)
 
     # Verificando se o nome do arquivo contém palavras-chave
-    if re.search(r"(tb|testbench|test)", file_name, re.IGNORECASE):
+    if re.search(r"(tb|testbench|test|verif)", file_name, re.IGNORECASE):
         return True
 
     # Verificando se alguma parte do caminho contém palavras-chave
     for part in directory_parts:
         if re.search(
-            r"(tests?|testbenches|testbenchs?|simulations?|tb|sim)", part, re.IGNORECASE
+            r"(tests?|testbenches?|testbenchs?|simulations?|tb|sim|verif)", part, re.IGNORECASE
         ):
             return True
 
