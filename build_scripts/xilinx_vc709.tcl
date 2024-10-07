@@ -20,7 +20,7 @@ read_xdc "/eda/processor-ci/constraints/xilinx_vc709.xdc"
 set_property PROCESSING_ORDER EARLY [get_files /eda/processor-ci/constraints/xilinx_vc709.xdc]
 
 # synth
-synth_design -top "top" -part "xc7vx690tffg1761-2" -verilog_define $ID -verilog_define $CLOCK_FREQ -verilog_define $MEMORY_SIZE
+synth_design -top "processorci_top" -part "xc7vx690tffg1761-2" -verilog_define $ID -verilog_define $CLOCK_FREQ -verilog_define $MEMORY_SIZE
 
 # place and route
 opt_design

@@ -13,6 +13,8 @@ add_file /eda/processor-ci-controller/src/memory.v
 add_file /eda/processor-ci-controller/src/interpreter.v
 add_file /eda/processor-ci-controller/src/controller.v
 
+set_option -top_module processorci 
+
 set_option -use_mspi_as_gpio 1
 set_option -use_sspi_as_gpio 1
 set_option -use_ready_as_gpio 1

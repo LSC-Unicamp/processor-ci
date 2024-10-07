@@ -9,4 +9,4 @@ yosys read_verilog /eda/processor-ci-controller/src/memory.v
 yosys read_verilog /eda/processor-ci-controller/src/interpreter.v
 yosys read_verilog /eda/processor-ci-controller/src/controller.v
 
-yosys synth_ecp5 -json colorlight_i9.json -abc9
+yosys synth_ecp5 -json colorlight_i9.json -top processorci_top -abc9

@@ -1,4 +1,4 @@
-module top (
+module processorci_top (
     // Timing pins
     `ifdef DIFERENCIAL_CLK
     input  wire clk_ref_p,

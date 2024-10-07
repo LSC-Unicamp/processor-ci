@@ -1,4 +1,4 @@
-module top (
+module processorci_top (
     `ifdef DIFERENCIAL_CLK
     input  wire clk_ref_p,
     input  wire clk_ref_n,
