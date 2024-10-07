@@ -13,7 +13,7 @@ from core.file_manager import (
     find_include_dirs,
 )
 from core.graph import build_module_graph
-from core.ollama import get_filtered_files_list, get_top_module
+from core.ollama import get_filtered_files_list, get_top_module, generate_top_file
 from core.jenkins import generate_jenkinsfile
 
 
@@ -28,6 +28,13 @@ FPGAs = [
 DESTINATION_DIR = "./temp"
 MAIN_SCRIPT_PATH = "/eda/processor-ci/main.py"
 
+
+def get_top_module_file(modules: list[dict[str, str]], top_module: str) -> str:
+    for module in modules:
+        if module["module"] == top_module:
+            return module["file"]
+
+    return ""
 
 def copy_hardware_template(repo_name: str) -> None:
     # Caminho do diretório de origem
@@ -95,8 +102,6 @@ def generate_processor_config(
         non_tb_files, tb_files, modules, module_graph, repo_name
     )
 
-    remove_repo(repo_name)
-
     language_version = "2005"
 
     if extension == ".vhdl":
@@ -132,7 +137,11 @@ def generate_processor_config(
 
     log_file.close()
 
-    copy_hardware_template(repo_name)
+    # copy_hardware_template(repo_name)
+    top_module_file = get_top_module_file(modulename_list, top_module)
+    generate_top_file(top_module_file, repo_name)
+
+    remove_repo(repo_name)
 
     if add_config:
         config = load_config(config_file_path)
