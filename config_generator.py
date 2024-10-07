@@ -203,6 +203,7 @@ def generate_processor_config(
     output_json["modules"] = modulename_list
     output_json["module_graph"] = module_graph
     output_json["module_graph_inverse"] = module_graph_inverse
+    output_json["non_tb_files"] = non_tb_files
 
     log_file = open(f"logs/{repo_name}_{time.time()}.json", "w")
 
