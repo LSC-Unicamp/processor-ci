@@ -1,4 +1,6 @@
 import os
+import re
+import time
 import json
 import shutil
 import argparse
@@ -27,16 +29,47 @@ FPGAs = [
 DESTINATION_DIR = "./temp"
 MAIN_SCRIPT_PATH = "/eda/processor-ci/main.py"
 
+def parse_filtered_files(text: str) -> list:
+    # Expressão regular para capturar a lista dentro de colchetes
+    match = re.search(r'filtered_files:\s*\[\s*(.*?)\s*\]', text, re.DOTALL)
+    
+    if match:
+        # Extrai o conteúdo dos colchetes
+        file_list_str = match.group(1)
+        
+        # Remove espaços em excesso, quebras de linha, e divide a string por vírgulas
+        file_list = [file.strip().strip("'") for file in file_list_str.split(',')]
+        
+        return file_list
+    
+    return []
+    
+def remove_top_module(text: str) -> str:
+    # Expressão regular para encontrar a linha com o formato top_module: <resposta>
+    match = re.search(r'top_module:\s*(\S+)', text)
+    
+    if match:
+        # Extrai o módulo encontrado
+        top_module = match.group(1)
+        return top_module
+    
+    return ""
 
-def get_filtered_files_list(files, sim_files, modules, tree):
+def get_filtered_files_list(files, sim_files, modules, tree, repo_name):
     prompt = f"""
     Processors are generally divided into one or more modules; for example, I can have a module for the ALU, one for the register bank, etc. 
     The files below are the hardware description language files for a processor and its peripherals. 
-    Additionally, we have the list of modules present in the processor (approximately, some modules might be missing) and which files they are in, as well as their dependency tree. 
-    The provided data has two categories: sim_files and files. The sim_files are testbench and verification files (usually containing terms like tests, tb, testbench, 
-    among others in the name), while the files are the remaining files, including unnecessary ones such as SoC and peripherals (memory, GPIO, UART, etc.). 
-    Based on this, keep only the files you deem relevant to a processor and return them in a Python list. Ignore memory and soc files such as ram.v, ram.vhdl, soc.v, etc. Remember, returns only files list.
+    Additionally, we have a list of modules present in the processor (approximately, some modules might be missing) and which files they are in, 
+    along with their dependency tree. The provided data has two categories: sim_files and files. 
+    The sim_files are testbench and verification files (usually containing terms like tests, tb, testbench, among others in the name), 
+    while the files are the remaining files, including unnecessary ones such as SoC, peripherals (memory, GPIO, UART, etc.). 
+    Based on this, keep only the files that you deem relevant to a processor and return them in a Python list. 
+    Remember to ignore memory files such as ram.v or ram.vhdl, peripheral files, board and FPGA files, debug files, among others. 
+    Keep only the processor-related files. Return the list of files in the requested template.
 
+    filtered_files: [<result>]
+
+    project_name: {repo_name},
     sim_files: [{sim_files}],
     files: [{files}],
     modules: [{modules}]
@@ -48,20 +81,21 @@ def get_filtered_files_list(files, sim_files, modules, tree):
     if not ok:
         raise NameError("Erro ao consultar modelo")
 
-    print(response)
+    #print (response)
+
+    return parse_filtered_files(response)
 
 
-def get_top_module(files, sim_files, modules, tree):
+def get_top_module(files, sim_files, modules, tree, repo_name):
     prompt = f"""
     Processors are generally divided into one or more modules; for example, I can have a module for the ALU, one for the register bank, etc. 
     The files below are the hardware description language files for a processor and its peripherals. 
     Additionally, we have a list of modules present in the processor (approximately, some modules might be missing), and which files they are in, along with their dependency tree. 
     The provided data has two categories: sim_files and files. The sim_files are testbench and verification files (usually containing terms like tests, tb, testbench, among others in the name), 
     while the files are the remaining files, including unnecessary ones such as SoC and peripherals (memory, GPIO, UART, etc.). Based on this, find the processor's top module—remember, the processor's, not the SoC's.
-    Here is the response in the requested template:
+    Return the top module in the following template: top_module: <result>.
 
-    top_module: <resultado>
-
+    project_name: {repo_name},
     sim_files: [{sim_files}],
     files: [{files}],
     modules: [{modules}]
@@ -73,7 +107,9 @@ def get_top_module(files, sim_files, modules, tree):
     if not ok:
         raise NameError("Erro ao consultar modelo")
 
-    print(response)
+    #print(response)
+
+    return remove_top_module(response)
 
 
 def copy_hardware_template(repo_name: str) -> None:
@@ -82,6 +118,10 @@ def copy_hardware_template(repo_name: str) -> None:
 
     # Caminho do diretório de destino
     dest = f"rtl/{repo_name}.v"
+
+    if os.path.exists(dest):
+        print("Arquivo já existe")
+        return
 
     # Copiar o diretório
     shutil.copy(orig, dest)
@@ -99,7 +139,7 @@ def generate_processor_config(
         return
 
     extensions = ["v", "sv", "vhdl", "vhd"]
-    files = find_files_with_extension(destination_path, extensions)
+    files, extension = find_files_with_extension(destination_path, extensions)
 
     modules = extract_modules(files)
 
@@ -131,24 +171,44 @@ def generate_processor_config(
     # Construir os grafos direto e inverso
     module_graph, module_graph_inverse = build_module_graph(files, modules)
 
-    # get_top_module(non_tb_files, tb_files, modules, module_graph)
+    filtered_files = get_filtered_files_list(non_tb_files, tb_files, modules, module_graph, repo_name)
+    top_module = get_top_module(non_tb_files, tb_files, modules, module_graph, repo_name)
 
     remove_repo(repo_name)
+
+    language_version = "2005"
+
+    if extension == ".vhdl":
+        language_version = "08"
+    elif extension == ".vhd":
+        language_version = "08"
+    elif extension == ".sv":
+        language_version = "2012"
 
     output_json = {
         "name": repo_name,
         "folder": repo_name,
         "sim_files": tb_files,
-        "files": non_tb_files,
+        "files": filtered_files,
         "include_dirs": include_dirs,
         "repository": url,
-        "top_module": "",
+        "top_module": top_module,
         "extra_flags": [],
-        "language_version": "2005",
+        "language_version": language_version,
     }
 
     print("Result: ")
     print(json.dumps(output_json, indent=4))
+
+    output_json["modules"] = modulename_list
+    output_json["module_graph"] = module_graph
+    output_json["module_graph_inverse"] = module_graph_inverse
+
+    log_file = open(f"logs/{repo_name}_{time.time()}.json", "w")
+
+    log_file.write(json.dumps(output_json, indent=4))
+
+    log_file.close()
 
     copy_hardware_template(repo_name)
 

@@ -17,7 +17,6 @@ mypy-extensions==1.0.0
 networkx==3.3
 numpy==2.1.2
 ollama==0.3.3
-ollama-python==0.1.2
 packaging==24.1
 pathspec==0.12.1
 pillow==10.4.0
