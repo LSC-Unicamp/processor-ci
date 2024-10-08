@@ -5,14 +5,16 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf T03x'
-                sh 'git clone --recursive https://github.com/klessydra/T03x.git T03x'
+                sh 'git clone --recursive https://github.com/klessydra/T03x T03x'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {
                 dir("T03x") {
-                    sh "ghdl -a --std=08   klessydra-t0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd klessydra-t0-3th/PKG_RiscV_Klessydra.vhd klessydra-t0-3th/RTL-CSR_Unit.vhd klessydra-t0-3th/RTL-Debug_Unit.vhd klessydra-t0-3th/RTL-Processing_Pipeline.vhd klessydra-t0-3th/RTL-Program_Counter_unit.vhd klessydra-t0-3th/STR-Klessydra_top.vhd "
+                    sh "ghdl -a --std=08   klessydra-t0-3th/PKG_RiscV_Klessydra_thread_parameters.vhd klessydra-t0-3th/PKG_RiscV_Klessydra.vhd klessydra-t0-3th/PKG_RiscV_Klessydra.vhd klessydra-t0-3th/RTL-CSR_Unit.vhd klessydra-t0-3th/RTL-Debug_Unit.vhd klessydra-t0-3th/RTL-Processing_Pipeline.vhd klessydra-t0-3th/RTL-Program_Counter_unit.vhd klessydra-t0-3th/STR-Klessydra_top.vhd "
                 }
             }
         }

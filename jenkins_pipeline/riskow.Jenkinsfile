@@ -5,14 +5,16 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf riskow'
-                sh 'git clone --recursive https://github.com/racerxdl/riskow.git riskow'
+                sh 'git clone --recursive https://github.com/racerxdl/riskow riskow'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {
                 dir("riskow") {
-                    sh "iverilog -o simulation.out -g2005  -s top  top.v cpu/cpu.v cpu/alu.v cpu/instruction_decoder.v cpu/program_counter.v cpu/register_bank.v devices/digital_port.v devices/timer.v  && vvp simulation.out"
+                    sh "iverilog -o simulation.out -g2005  -s CPU  cpu/alu.v cpu/comp.v cpu/cpu.v cpu/instruction_decoder.v cpu/program_counter.v cpu/register_bank.v "
                 }
             }
         }

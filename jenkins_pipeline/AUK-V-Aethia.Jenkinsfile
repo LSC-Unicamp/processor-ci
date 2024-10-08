@@ -5,14 +5,16 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf AUK-V-Aethia'
-                sh 'git clone --recursive https://github.com/veeYceeY/AUK-V-Aethia.git AUK-V-Aethia'
+                sh 'git clone --recursive https://github.com/veeYceeY/AUK-V-Aethia AUK-V-Aethia'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {
                 dir("AUK-V-Aethia") {
-                    sh "iverilog -o simulation.out -g2005  -s aukv  rtl/core/aukv.v rtl/core/aukv_alu.v rtl/core/aukv_csr_regfile.v rtl/core/aukv_decode.v rtl/core/aukv_execute.v rtl/core/aukv_fetch.v rtl/core/aukv_gpr_regfilie.v rtl/core/aukv_mem.v  && vvp simulation.out"
+                    sh "iverilog -o simulation.out -g2005  -s aukv  rtl/core/aukv.v rtl/core/aukv_alu.v rtl/core/aukv_csr_regfile.v rtl/core/aukv_decode.v rtl/core/aukv_execute.v rtl/core/aukv_fetch.v rtl/core/aukv_gpr_regfilie.v rtl/core/aukv_mem.v "
                 }
             }
         }

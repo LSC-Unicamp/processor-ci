@@ -5,9 +5,11 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf T02x'
-                sh 'git clone --recursive https://github.com/klessydra/T02x.git T02x'
+                sh 'git clone --recursive https://github.com/klessydra/T02x T02x'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {

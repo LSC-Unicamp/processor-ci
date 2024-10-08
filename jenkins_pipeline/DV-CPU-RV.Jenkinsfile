@@ -9,10 +9,12 @@ pipeline {
             }
         }
 
+        
+
         stage('Simulation') {
             steps {
                 dir("DV-CPU-RV") {
-                    sh "iverilog -o simulation.out -g2005  -s tb_rv_core  rtl/rv_alu_ctrl.v rtl/rv_alu.v rtl/rv_branch_predict.v rtl/rv_branch_test.v rtl/rv_core.v rtl/rv_ctrl.v rtl/rv_data_mem.v rtl/rv_div.v rtl/rv_dpram.v rtl/rv_forward.v rtl/rv_hzd_detect.v rtl/rv_imm_gen.v rtl/rv_instr_mem.v rtl/rv_mem_map.v rtl/rv_mul.v rtl/rv_rf.v bench/tb_rv_core.v && vvp simulation.out"
+                    sh "iverilog -o simulation.out -g2005  -s rv_core  core/rtl/rv_alu.v core/rtl/rv_alu_ctrl.v core/rtl/rv_branch_predict.v core/rtl/rv_branch_test.v core/rtl/rv_core.v core/rtl/rv_ctrl.v core/rtl/rv_data_mem.v core/rtl/rv_div.v core/rtl/rv_dpram.v core/rtl/rv_forward.v core/rtl/rv_hzd_detect.v core/rtl/rv_imm_gen.v core/rtl/rv_instr_mem.v core/rtl/rv_mem_map.v core/rtl/rv_mul.v core/rtl/rv_rf.v core/rtl/rv_instr_mem.v core/rtl/rv_data_mem.v "
                 }
             }
         }

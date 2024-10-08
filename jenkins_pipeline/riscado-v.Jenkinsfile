@@ -5,14 +5,16 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf riscado-v'
-                sh 'git clone --recursive https://github.com/zxmarcos/riscado-v.git riscado-v'
+                sh 'git clone --recursive https://github.com/zxmarcos/riscado-v riscado-v'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {
                 dir("riscado-v") {
-                    sh "iverilog -o simulation.out -g2005  -s   RISCV_SOC.v alu.v clk_divider.v control_unit.v gpu.v load_store.v program_counter.v ram.v register_file.v riscv.v rom.v soctop.v vga_encoder.v vram.v ram_tb.v soctop_tb.v && vvp simulation.out"
+                    sh "iverilog -o simulation.out -g2005  -s RISCV  alu.v control_unit.v program_counter.v register_file.v riscv.v load_store.v "
                 }
             }
         }

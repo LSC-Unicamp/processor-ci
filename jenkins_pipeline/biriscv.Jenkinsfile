@@ -5,14 +5,16 @@ pipeline {
         stage('Git Clone') {
             steps {
                 sh 'rm -rf biriscv'
-                sh 'git clone --recursive https://github.com/ultraembedded/biriscv.git biriscv'
+                sh 'git clone --recursive https://github.com/ultraembedded/biriscv biriscv'
             }
         }
+
+        
 
         stage('Simulation') {
             steps {
                 dir("biriscv") {
-                    sh "iverilog -o simulation.out -g2005  -s biriscv_csr -I src/core src/core/biriscv_csr.v src/core/biriscv_csr_regfile.v  && vvp simulation.out"
+                    sh "iverilog -o simulation.out -g2005  -s riscv_core -I src/core src/core/biriscv_alu.v src/core/biriscv_csr.v src/core/biriscv_csr_regfile.v src/core/biriscv_decode.v src/core/biriscv_decoder.v src/core/biriscv_defs.v src/core/biriscv_divider.v src/core/biriscv_exec.v src/core/biriscv_fetch.v src/core/biriscv_frontend.v src/core/biriscv_issue.v src/core/biriscv_lsu.v src/core/biriscv_mmu.v src/core/biriscv_multiplier.v src/core/biriscv_npc.v src/core/biriscv_pipe_ctrl.v src/core/biriscv_regfile.v src/core/biriscv_trace_sim.v src/core/biriscv_xilinx_2r1w.v src/core/riscv_core.v "
                 }
             }
         }
