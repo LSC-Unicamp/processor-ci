@@ -26,8 +26,7 @@ module processorci_top (
     `endif
 );
 
-wire clk_core, reset_core, reset_o,
-    memory_read, memory_write;
+wire clk_core, reset_core, reset_o, busWriteEnable, memory_response;
 
 wire [31:0] core_read_data, core_write_data, address,
     data_address, data_read, data_write;
@@ -69,12 +68,12 @@ Controller #(
     .reset_core(reset_core),
     
     // main memory - instruction memory
-    .core_memory_response  (),
-    .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
+    .core_memory_response  (memory_response),
+    .core_read_memory      (~busWriteEnable),
+    .core_write_memory     (busWriteEnable),
     .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (1'b1),
+    .core_write_data_memory(core_write_data),
+    .core_read_data_memory (core_read_data),
 
     //sync main memory bus
     .core_read_data_memory_sync     (),
@@ -93,7 +92,17 @@ Controller #(
 
 // Core space
 
-
+CPU Riskow (
+    .clk           (clk_core),
+    .reset         (reset_core),
+    .dataIn        (core_read_data),
+    .dataOut       (core_write_data),
+    .address       (address),
+    .busValid      (),
+    .busInstr      (),
+    .busReady      (memory_response),
+    .busWriteEnable(busWriteEnable)
+);
 
 
 // Clock inflaestructure

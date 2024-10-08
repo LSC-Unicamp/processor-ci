@@ -26,11 +26,9 @@ module processorci_top (
     `endif
 );
 
-wire clk_core, reset_core, reset_o,
-    memory_read, memory_write;
+wire clk_core, reset_core, reset_o, memory_write;
 
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
+wire [31:0] core_read_data, core_write_data, address;
 
 
 Controller #(
@@ -70,11 +68,11 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
+    .core_read_memory      (1'b1),
+    .core_write_memory     (memory_write),
     .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (1'b1),
+    .core_write_data_memory(core_write_data),
+    .core_read_data_memory (core_read_data),
 
     //sync main memory bus
     .core_read_data_memory_sync     (),
@@ -83,17 +81,24 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_read_memory_data      (1'b0),
+    .core_write_memory_data     (1'b0),
+    .core_address_memory_data   (32'h00000000),
+    .core_write_data_memory_data(),
+    .core_read_data_memory_data ()
 );
 
 
 // Core space
 
-
+RISCV Riscado_V (
+    .clk        (clk_core),
+    .reset      (reset_core),
+    .dataIn     (core_read_data),
+    .dataOut    (core_write_data),
+    .address    (address),
+    .writeEnable(memory_write)
+);
 
 
 // Clock inflaestructure
