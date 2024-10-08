@@ -137,9 +137,9 @@ def generate_processor_config(
 
     log_file.close()
 
-    # copy_hardware_template(repo_name)
-    top_module_file = get_top_module_file(modulename_list, top_module)
-    generate_top_file(top_module_file, repo_name)
+    copy_hardware_template(repo_name)
+    #top_module_file = get_top_module_file(modulename_list, top_module)
+    #generate_top_file(top_module_file, repo_name)
 
     remove_repo(repo_name)
 

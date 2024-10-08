@@ -14,7 +14,7 @@ def clone_repo(url, repo_name):
 
     try:
         # Clonar o repositório
-        subprocess.run(["git", "clone", url, destination_path], check=True)
+        subprocess.run(["git", "clone", "--recursive", url, destination_path], check=True)
         return destination_path
     except subprocess.CalledProcessError as e:
         print(f"Erro ao clonar o repositório: {e}")

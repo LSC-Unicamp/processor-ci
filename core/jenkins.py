@@ -17,6 +17,8 @@ pipeline {{
             }}
         }}
 
+        {pre_script}
+
         stage('Simulation') {{
             steps {{
                 dir("{folder}") {{
@@ -54,14 +56,14 @@ pipeline {{
         file.endswith(".vhdl") or file.endswith(".vhd")
         for file in config.get("files", [])
     )
-    is_verilog = any(file.endswith(".v") for file in config.get("files", []))
+    is_verilog = any(file.endswith(".v") or file.endswith(".sv") for file in config.get("files", []))
 
     if is_vhdl and not is_verilog:
         # VHDL simulation command
         simulation_command = f'sh "ghdl -a --std={lang_version} {extra_flags_str} {include_dirs} {files} {sim_files}"'
     elif is_verilog and not is_vhdl:
         # Verilog simulation command
-        simulation_command = f'sh "iverilog -o simulation.out -g{lang_version} {extra_flags_str} -s {config["top_module"]} {include_dirs} {files} {sim_files} && vvp simulation.out"'
+        simulation_command = f'sh "iverilog -o simulation.out -g{lang_version} {extra_flags_str} -s {config["top_module"]} {include_dirs} {files} {sim_files}"'
     else:
         raise ValueError("Os arquivos precisam ser exclusivamente VHDL ou Verilog.")
 
@@ -104,10 +106,24 @@ pipeline {{
         ]
     )
 
+    pre_script = ""
+
+    if "pre_script" in config.keys():
+        pre_script = f"""
+        stage('Verilog Convert') {{
+            steps {{
+                dir("{config['folder']}") {{
+                    sh '{config['pre_script']}'
+                }}
+            }}
+        }}
+        """
+
     # Generate Jenkinsfile content
     jenkinsfile = jenkinsfile.format(
         repository=config["repository"],
         folder=config["folder"],
+        pre_script=pre_script,
         top_module=config["top_module"],
         include_dirs=include_dirs,
         files=files,

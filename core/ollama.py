@@ -8,7 +8,7 @@ SERVER_URL = "http://enqii.lsc.ic.unicamp.br:11434"
 client = Client(host=SERVER_URL)
 
 
-def send_prompt(prompt: str, model: str = "qwen2.5:32b") -> tuple[bool, str]:
+def send_prompt(prompt: str, model: str = "qwen2.5:32b") -> tuple[bool, str]: # "qwen2.5:32b"
 
     response = client.generate(prompt=prompt, model=model)
 
@@ -56,9 +56,12 @@ def get_filtered_files_list(files, sim_files, modules, tree, repo_name):
     while the files are the remaining files, including unnecessary ones such as SoC, peripherals (memory, GPIO, UART, etc.). 
     Based on this, keep only the files that you deem relevant to a processor and return them in a Python list. 
     Remember to ignore memory files such as ram.v or ram.vhdl, peripheral files, caches files, pll files, bus files, board and FPGA files, debug files, among others. 
-    Keep only the processor-related files. Return the list of files in the requested template.
+    Keep only the processor-related files. Return files in template: filtered_files: [<result>].
 
-    filtered_files: [<result>]
+    TIP: generally directories with names like rtl, core, src, project_name, etc., usually have the processor files. Files with the project name are often processor files.
+    All processors have at least one useful file
+
+    Return only the list of files in the requested template, excluding any additional files and comments.
 
     project_name: {repo_name},
     sim_files: [{sim_files}],
@@ -72,7 +75,7 @@ def get_filtered_files_list(files, sim_files, modules, tree, repo_name):
     if not ok:
         raise NameError("Erro ao consultar modelo")
 
-    # print (response)
+    print (response)
 
     return parse_filtered_files(response)
 
