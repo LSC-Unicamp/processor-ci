@@ -55,7 +55,7 @@ pipeline {
                             steps {
                                 echo 'Testando FPGA colorlight_i9.'
                                 dir("VexRiscv") {
-                                    // Insira aqui os comandos de teste necessários
+                                    sh 'PYTHONPATH=/eda/processor-ci-communication PORT=/dev/ttyACM0 python /eda/processor-ci-communication/run_tests.py' 
                                 }
                             }
                         }
@@ -87,7 +87,7 @@ pipeline {
                             steps {
                                 echo 'Testando FPGA digilent_nexys4_ddr.'
                                 dir("VexRiscv") {
-                                    // Insira aqui os comandos de teste necessários
+                                    sh 'PYTHONPATH=/eda/processor-ci-communication PORT=/dev/ttyUSB1 python /eda/processor-ci-communication/run_tests.py' 
                                 }
                             }
                         }
@@ -98,9 +98,7 @@ pipeline {
     }
     post {
         always {
-            dir("VexRiscv") {
-                sh 'rm -rf *'
-            }
+            junit '**/test-reports/*.xml'
         }
     }
 }

@@ -35,9 +35,7 @@ pipeline {{
     }}
     post {{
         always {{
-            dir("{folder}") {{
-                sh 'rm -rf *'
-            }}
+            junit '**/test-reports/*.xml'
         }}
     }}
 }}
@@ -96,7 +94,7 @@ pipeline {{
                             steps {{
                                 echo 'Testando FPGA {fpga}.'
                                 dir("{config['folder']}") {{
-                                    // Insira aqui os comandos de teste necessários
+                                    sh 'PYTHONPATH=/eda/processor-ci-communication PORT={"/dev/ttyACM0" if fpga == "colorlight_i9" else "/dev/ttyUSB1"} python /eda/processor-ci-communication/run_tests.py' 
                                 }}
                             }}
                         }}
