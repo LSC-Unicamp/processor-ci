@@ -29,8 +29,7 @@ module processorci_top (
 wire clk_core, reset_core, reset_o,
     memory_read, memory_write;
 
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
+wire [31:0] core_read_data, core_write_data, address;
 
 
 Controller #(
@@ -71,10 +70,10 @@ Controller #(
     // main memory - instruction memory
     .core_memory_response  (),
     .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
+    .core_write_memory     (memory_write),
     .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (),
+    .core_write_data_memory(core_write_data),
+    .core_read_data_memory (core_read_data),
 
     //sync main memory bus
     .core_read_data_memory_sync     (),
@@ -83,17 +82,47 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_read_memory_data      (1'b0),
+    .core_write_memory_data     (1'b0),
+    .core_address_memory_data   (32'h00000000),
+    .core_write_data_memory_data(),
+    .core_read_data_memory_data ()
 );
 
+wire [31:0] read_address, write_address;
+
+assign address = (memory_write == 1'b1) ? read_address, write_address;
 
 // Core space
 
-
+mriscvcore mriscvcore_inst (
+    .clk    (clk_core       ),
+    .rstn   (~reset_core    ),
+    .trap   (1'b0           ),
+    .AWvalid(),
+    .AWready(1'b1),
+    
+    .AWdata (write_address ),
+    
+    .AWprot ( ),
+    .Wvalid (memory_write),
+    .Wready (1'b1 ),
+    .Wdata  (core_write_data  ),
+    .Wstrb  (  ),
+    .Bvalid (1'b1 ),
+    .Bready ( ),
+    .ARvalid(memory_read),
+    .ARready(1'b1),
+    
+    .ARdata (read_address ),
+    
+    .ARprot ( ),
+    .Rvalid (1'b1 ),
+    .RReady (),
+    .Rdata  (core_read_data),
+    //.outirr (irq            ),
+    .inirr  (32'h00000000   )
+);
 
 
 // Clock inflaestructure

@@ -85,9 +85,9 @@ Controller #(
     .core_memory_response  (),
     .core_read_memory      (1'b1),
     .core_write_memory     (1'b0),
-    .core_address_memory   (address),
+    .core_address_memory   (m1_addr_i),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (core_read_data),
+    .core_read_data_memory (m1_data_o),
 
     // Sync main memory bus
     .core_read_data_memory_sync     (),
@@ -96,11 +96,11 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_read_memory_data      (m0_req_i & ~m0_we_i),
+    .core_write_memory_data     (m0_req_i & m0_we_i),
+    .core_address_memory_data   (m0_addr_i),
+    .core_write_data_memory_data(m0_data_i),
+    .core_read_data_memory_data (m0_data_o)
 );
 
 // Instância do tinyriscv

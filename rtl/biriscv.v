@@ -70,7 +70,7 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (memory_read),
+    .core_read_memory      (1'b1),
     .core_write_memory     (1'b0),
     .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
@@ -93,7 +93,43 @@ Controller #(
 
 // Core space
 
+riscv_core
+u_dut
+//-----------------------------------------------------------------
+// Ports
+//-----------------------------------------------------------------
+(
+    // Inputs
+     .clk_i(clk_core)
+    ,.rst_i(reset_core)
+    ,.mem_d_data_rd_i(data_read)
+    ,.mem_d_accept_i(1'b1)
+    ,.mem_d_ack_i(1'b1)
+    ,.mem_d_error_i(1'b0)
+    ,.mem_d_resp_tag_i()
+    ,.mem_i_accept_i(1'b1)
+    ,.mem_i_valid_i(1'b1)
+    ,.mem_i_error_i(1'b0)
+    ,.mem_i_inst_i(core_read_data)
+    ,.intr_i(1'b0)
+    ,.reset_vector_i(32'h80000000)
+    ,.cpu_id_i('b0)
 
+    // Outputs
+    ,.mem_d_addr_o(data_address)
+    ,.mem_d_data_wr_o(data_write)
+    ,.mem_d_rd_o(data_read)
+    ,.mem_d_wr_o(data_write)
+    ,.mem_d_cacheable_o()
+    ,.mem_d_req_tag_o()
+    ,.mem_d_invalidate_o()
+    ,.mem_d_writeback_o()
+    ,.mem_d_flush_o()
+    ,.mem_i_rd_o()
+    ,.mem_i_flush_o()
+    ,.mem_i_invalidate_o()
+    ,.mem_i_pc_o(address)
+);
 
 
 // Clock inflaestructure
