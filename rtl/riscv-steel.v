@@ -68,32 +68,69 @@ Controller #(
     .clk_core  (clk_core),
     .reset_core(reset_core),
     
-    // main memory - instruction memory
     .core_memory_response  (),
     .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
+    .core_write_memory     (memory_write),
     .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
+    .core_write_data_memory(core_write_data),
     .core_read_data_memory (),
 
-    //sync main memory bus
-    .core_read_data_memory_sync     (),
-    .core_memory_read_response_sync (),
-    .core_memory_write_response_sync(),
+    //sync memory bus
+    .core_read_data_memory_sync     (core_read_data),
+    .core_memory_read_response_sync (read_response),
+    .core_memory_write_response_sync(write_response),
 
     // Data memory
     .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_read_memory_data      (1'b0),
+    .core_write_memory_data     (1'b0),
+    .core_address_memory_data   (32'h00000000),
+    .core_write_data_memory_data(32'h00000000),
+    .core_read_data_memory_data ()
 );
 
 
 // Core space
 
+rvsteel_core #(
+    .BOOT_ADDRESS (32'h00000000)
+) rvsteel_core_instance (
 
+    // Global signals
+
+    .clock(clk_core),
+    .reset(reset_core),
+    .halt (1'b0 ),
+
+    // IO interface
+
+    .rw_address    (address),
+    .read_data     (core_read_data),
+    .read_request  (memory_read),
+    .read_response (read_response),
+    .write_data    (core_write_data),
+    .write_strobe  (),
+    .write_request (memory_write),
+    .write_response(write_response),
+
+    // Interrupt request signals
+
+    .irq_fast    (16'h0),
+    .irq_external(1'b0),
+    .irq_timer   (1'b0),
+    .irq_software(1'b0),
+
+    // Interrupt response signals
+
+    .irq_fast_response    (),
+    .irq_external_response(),
+    .irq_timer_response   (),
+    .irq_software_response(),
+
+    // Real Time Clock
+
+    .real_time_clock(64'h0)
+);
 
 
 // Clock inflaestructure
