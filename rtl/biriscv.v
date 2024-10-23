@@ -74,7 +74,7 @@ Controller #(
     .core_write_memory     (1'b0),
     .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (),
+    .core_read_data_memory (core_read_data),
 
     //sync main memory bus
     .core_read_data_memory_sync     (),
@@ -118,8 +118,8 @@ u_dut
     // Outputs
     ,.mem_d_addr_o(data_address)
     ,.mem_d_data_wr_o(data_write)
-    ,.mem_d_rd_o(data_read)
-    ,.mem_d_wr_o(data_write)
+    ,.mem_d_rd_o(memory_read)
+    ,.mem_d_wr_o()
     ,.mem_d_cacheable_o()
     ,.mem_d_req_tag_o()
     ,.mem_d_invalidate_o()
