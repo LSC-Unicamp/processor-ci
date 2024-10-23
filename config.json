@@ -55,7 +55,7 @@
             "folder": "riscv-steel",
             "sim_files": [],
             "files": [
-                "hardware/core/rvsteel_core.v"
+                "hardware/rvsteel_core.v"
             ],
             "include_dirs": [],
             "repository": "https://github.com/riscv-steel/riscv-steel",

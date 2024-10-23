@@ -24,7 +24,7 @@ dados_xilinx = {
     "AUK-V-Aethia": {"LUT4": 5000, "Frequency": 50},
     "Mriscv": {"LUT4": 5500, "Frequency": 40},
     "Pequeno_Risco_5": {"LUT4": 2500, "Frequency": 40},
-    "TinyRiscv": {"LUT4": 3900, "Frequency": 80},
+    "TinyRiscv": {"LUT4": 2570, "Frequency": 80},
     "biriscv": {"LUT4": 6500, "Frequency": 70},
     "riskow": {"LUT4": 1399, "Frequency": 45},
     "riscado-v": {"LUT4": 3500, "Frequency": 55},
