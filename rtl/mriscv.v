@@ -91,7 +91,7 @@ Controller #(
 
 wire [31:0] read_address, write_address;
 
-assign address = (memory_write == 1'b1) ? read_address, write_address;
+assign address = (memory_write == 1'b1) ? read_address : write_address;
 
 // Core space
 
