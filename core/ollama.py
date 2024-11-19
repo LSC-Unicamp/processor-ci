@@ -1,52 +1,151 @@
+"""
+This script contains utilities for interacting with a language model server to perform operations
+on processor-related hardware description language (HDL) files. It provides functions for sending
+prompts, parsing responses, and generating outputs relevant to processor verification and design.
+
+Features:
+- **Server Communication**: Interact with the specified language model server to process prompts.
+- **File Filtering**: Identify and filter files relevant to processor functionality.
+- **Top Module Detection**: Extract the processor's top module for further use in synthesis or
+    simulation.
+- **Verilog File Generation**: Automatically generate Verilog files to connect the processor with
+  verification infrastructures.
+
+Modules:
+- **`send_prompt`**: Sends a prompt to the language model and returns the response.
+- **`parse_filtered_files`**: Parses text to extract a list of filtered HDL files.
+- **`remove_top_module`**: Extracts the name of the top module from the model's response.
+- **`get_filtered_files_list`**: Filters processor-relevant files using model analysis.
+- **`get_top_module`**: Identifies the processor's top module based on file data and dependencies.
+- **`generate_top_file`**: Creates a Verilog file for processor and verification infrastructure
+    integration.
+
+Dependencies:
+- `ollama`: A client library for interacting with the language model.
+- Standard Python libraries: `os`, `re`, and `time`.
+
+Configuration:
+- `SERVER_URL`: Specifies the server's URL for the language model.
+
+Usage:
+1. Adjust the `SERVER_URL` to point to the correct language model server.
+2. Use the provided functions to filter files, identify the top module, and generate necessary
+    Verilog files.
+3. Outputs can be used in HDL simulations, synthesis, and verification.
+
+Note:
+- Ensure the server is running and accessible.
+- All file paths and directory structures must match the expected inputs for successful operations.
+"""
+
 import os
 import re
 import time
 from ollama import Client
 
-SERVER_URL = "http://enqii.lsc.ic.unicamp.br:11434"
+SERVER_URL = 'http://enqii.lsc.ic.unicamp.br:11434'
 
 client = Client(host=SERVER_URL)
 
 
-def send_prompt(prompt: str, model: str = "qwen2.5:32b") -> tuple[bool, str]: # "qwen2.5:32b"
+def send_prompt(prompt: str, model: str = 'qwen2.5:32b') -> tuple[bool, str]:
+    """
+    Sends a prompt to the specified server and receives the model's response.
 
+    Args:
+        prompt (str): The prompt to be sent to the model.
+        model (str, optional): The model to use. Default is 'qwen2.5:32b'.
+
+    Returns:
+        tuple: A tuple containing a boolean value (indicating success)
+               and the model's response as a string.
+    """
     response = client.generate(prompt=prompt, model=model)
 
-    if not response or not "response" in response:
-        return 0, ""
+    if not response or 'response' not in response:
+        return 0, ''
 
-    return 1, response["response"]
+    return 1, response['response']
 
 
 def parse_filtered_files(text: str) -> list:
-    # Expressão regular para capturar a lista dentro de colchetes
-    match = re.search(r"filtered_files:\s*\[\s*(.*?)\s*\]", text, re.DOTALL)
+    """
+    Parses a text to extract a list of filtered files.
+
+    Uses a regular expression to locate and capture a list of files present
+    in a string formatted as `filtered_files: [<file list>]`.
+    Cleans up spaces and unnecessary characters before returning the results.
+
+    Args:
+        text (str): The text to be parsed to find the filtered file list.
+
+    Returns:
+        list: A list containing the names of filtered files.
+              Returns an empty list if no files are found.
+    """
+    match = re.search(r'filtered_files:\s*\[\s*(.*?)\s*\]', text, re.DOTALL)
 
     if match:
-        # Extrai o conteúdo dos colchetes
         file_list_str = match.group(1)
-
-        # Remove espaços em excesso, quebras de linha, e divide a string por vírgulas
-        file_list = [file.strip().strip("'") for file in file_list_str.split(",")]
-
+        file_list = [
+            file.strip().strip("'") for file in file_list_str.split(',')
+        ]
         return file_list
 
     return []
 
 
 def remove_top_module(text: str) -> str:
-    # Expressão regular para encontrar a linha com o formato top_module: <resposta>
-    match = re.search(r"top_module:\s*(\S+)", text)
+    """
+    Extracts the name of the top module from a given text.
+
+    Uses a regular expression to locate and capture a line following the format
+    `top_module: <module_name>`. If found, it returns the module name.
+
+    Args:
+        text (str): The text to be parsed to find the top module.
+
+    Returns:
+        str: The name of the top module extracted from the text.
+             Returns an empty string if no top module is found.
+    """
+    match = re.search(r'top_module:\s*(\S+)', text)
 
     if match:
-        # Extrai o módulo encontrado
         top_module = match.group(1)
         return top_module
 
-    return ""
+    return ''
 
 
-def get_filtered_files_list(files, sim_files, modules, tree, repo_name):
+def get_filtered_files_list(
+    files: list[str],
+    sim_files: list[str],
+    modules: list[str],
+    tree,
+    repo_name: str,
+) -> list[str]:
+    """
+    Generates a list of files relevant to a processor based on the provided data.
+
+    This function uses a language model to analyze lists of files, modules,
+    dependency trees, and repository data, filtering out irrelevant files such as
+    those related to peripherals, memories, or debugging. It returns only the files
+    directly related to the processor.
+
+    Args:
+        files (list): List of available files.
+        sim_files (list): List of simulation and test-related files.
+        modules (list): List of modules present in the processor.
+        tree (list): Dependency structure of the modules.
+        repo_name (str): Name of the project repository.
+
+    Returns:
+        list: A list containing the names of the files relevant to the processor.
+
+    Raises:
+        NameError: If an error occurs during the language model query.
+    """
     prompt = f"""
     Processors are generally divided into one or more modules; for example, I can have a module for the ALU, one for the register bank, etc. 
     The files below are the hardware description language files for a processor and its peripherals. 
@@ -73,14 +172,40 @@ def get_filtered_files_list(files, sim_files, modules, tree, repo_name):
     ok, response = send_prompt(prompt)
 
     if not ok:
-        raise NameError("Erro ao consultar modelo")
+        raise NameError('Erro ao consultar modelo')
 
-    print (response)
+    print(response)
 
     return parse_filtered_files(response)
 
 
-def get_top_module(files, sim_files, modules, tree, repo_name):
+def get_top_module(
+    files: list[str],
+    sim_files: list[str],
+    modules: list[str],
+    tree,
+    repo_name: str,
+) -> str:
+    """
+    Identifies the processor's top module within a set of files.
+
+    Uses a language model to analyze files, modules, dependency trees,
+    and repository data to determine the processor's top module, ignoring
+    other elements such as SoCs or peripherals.
+
+    Args:
+        files (list): List of available files.
+        sim_files (list): List of simulation and test-related files.
+        modules (list): List of modules present in the processor.
+        tree (list): Dependency structure of the modules.
+        repo_name (str): Name of the project repository.
+
+    Returns:
+        str: The name of the processor's top module.
+
+    Raises:
+        NameError: If an error occurs during the language model query.
+    """
     prompt = f"""
     Processors are generally divided into one or more modules; for example, I can have a module for the ALU, one for the register bank, etc. 
     The files below are the hardware description language files for a processor and its peripherals. 
@@ -99,7 +224,7 @@ def get_top_module(files, sim_files, modules, tree, repo_name):
     ok, response = send_prompt(prompt)
 
     if not ok:
-        raise NameError("Erro ao consultar modelo")
+        raise NameError('Erro ao consultar modelo')
 
     # print(response)
 
@@ -107,16 +232,36 @@ def get_top_module(files, sim_files, modules, tree, repo_name):
 
 
 def generate_top_file(top_module_file: str, processor_name: str) -> None:
-    template_file = open("rtl/template.v", "r")
-    top_module_file = open(f"temp/{processor_name}/{top_module_file}", "r")
-    example_file = open("rtl/Risco-5.v", "r")
+    """
+    Generates a Verilog file connecting a processor to a verification infrastructure.
 
-    template = template_file.read()
-    top_module_content = top_module_file.read()
-    example = example_file.read()
+    This function creates a Verilog module based on a template, the processor's
+    top module file, and a provided example. It establishes the necessary connections
+    between the processor and the verification infrastructure.
+
+    Args:
+        top_module_file (str): Path to the file containing the processor's top module.
+        processor_name (str): Name of the processor.
+
+    Returns:
+        None: The result is saved in a Verilog file.
+
+    Raises:
+        NameError: If an error occurs during the language model query.
+    """
+    with open('rtl/template.v', 'r', encoding='utf-8') as template_file:
+        template = template_file.read()
+
+    with open(
+        f'temp/{processor_name}/{top_module_file}', 'r', encoding='utf-8'
+    ) as top_module_file_:
+        top_module_content = top_module_file_.read()
+
+    with open('rtl/Risco-5.v', 'r', encoding='utf-8') as example_file:
+        example = example_file.read()
 
     template_file.close()
-    top_module_file.close()
+    top_module_file_.close()
     example_file.close()
 
     prompt = f"""
@@ -142,11 +287,11 @@ def generate_top_file(top_module_file: str, processor_name: str) -> None:
     ok, response = send_prompt(prompt)
 
     if not ok:
-        raise NameError("Erro ao consultar modelo")
+        raise NameError('Erro ao consultar modelo')
 
-    if os.path.exists(f"rtl/{processor_name}.v"):
-        processor_name = f"{processor_name}_{time.time()}"
+    if os.path.exists(f'rtl/{processor_name}.v'):
+        processor_name = f'{processor_name}_{time.time()}'
 
-    final_file = open(f"rtl/{processor_name}.v", "w")
-    final_file.write(response)
-    final_file.close()
+    with open(f'rtl/{processor_name}.v', 'w', encoding='utf-8') as final_file:
+        final_file.write(response)
+        final_file.close()

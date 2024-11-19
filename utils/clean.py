@@ -15,4 +15,6 @@ for core in data['cores'].values():
 with open('config2.json', 'w') as file:
     json.dump(data, file, indent=4)
 
-print("As chaves indesejadas foram removidas e o novo arquivo foi salvo como config2.json.")
+print(
+    'As chaves indesejadas foram removidas e o novo arquivo foi salvo como config2.json.'
+)
