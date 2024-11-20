@@ -110,8 +110,10 @@ pipeline {{
             {extra_flags_str} {include_dirs} {files} {sim_files}"'
     elif is_verilog and not is_vhdl:
         # Verilog simulation command
-        simulation_command = f'sh "iverilog -o simulation.out -g{lang_version} {extra_flags_str}' \
+        simulation_command = (
+            f'sh "iverilog -o simulation.out -g{lang_version} {extra_flags_str}'
             + f' -s {config["top_module"]} {include_dirs} {files} {sim_files}"'
+        )
     else:
         raise ValueError(
             'The files must be either exclusively VHDL or Verilog.'

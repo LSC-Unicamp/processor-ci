@@ -1,6 +1,6 @@
 """
-Este script lê uma lista de URLs de um arquivo, executa um comando com cada URL usando proxychains, 
-e gera configurações através do script `config_generator.py`. Para cada URL, o comando é executado 
+Este script lê uma lista de URLs de um arquivo, executa um comando com cada URL usando proxychains,
+e gera configurações através do script `config_generator.py`. Para cada URL, o comando é executado
 com um tempo limite de 3 minutos (180 segundos).
 
 O script faz o seguinte:

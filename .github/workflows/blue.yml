@@ -1,0 +1,32 @@
+name: Python Code Format Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format-check:
+    name: Check Python Formatting with Blue
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install Blue
+        run: |
+          python -m pip install --upgrade pip
+          pip install blue
+
+      - name: Run Blue format check
+        run: |
+          blue --check .
