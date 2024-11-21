@@ -141,7 +141,11 @@ def copy_hardware_template(repo_name: str) -> None:
 
 
 def generate_processor_config(
-    url: str, add_config: bool, plot_graph: bool, config_file_path: str
+    url: str,
+    add_config: bool,
+    plot_graph: bool,
+    config_file_path: str,
+    no_llama: bool,
 ) -> None:
     """
     Generates a processor configuration by cloning a repository, analyzing its files,
@@ -152,6 +156,7 @@ def generate_processor_config(
         add_config (bool): Whether to add the generated configuration to the config file.
         plot_graph (bool): Whether to plot the module dependency graphs.
         config_file_path (str): Path to the configuration file.
+        no_llama (bool): Whether to use OLLAMA to identify the top module.
 
     Returns:
         None
@@ -197,12 +202,16 @@ def generate_processor_config(
     # Construir os grafos direto e inverso
     module_graph, module_graph_inverse = build_module_graph(files, modules)
 
-    filtered_files = get_filtered_files_list(
-        non_tb_files, tb_files, modules, module_graph, repo_name
-    )
-    top_module = get_top_module(
-        non_tb_files, tb_files, modules, module_graph, repo_name
-    )
+    filtered_files = non_tb_files
+    top_module = ''
+
+    if not no_llama:
+        filtered_files = get_filtered_files_list(
+            non_tb_files, tb_files, modules, module_graph, repo_name
+        )
+        top_module = get_top_module(
+            non_tb_files, tb_files, modules, module_graph, repo_name
+        )
 
     language_version = '2005'
 
@@ -218,7 +227,7 @@ def generate_processor_config(
         'folder': repo_name,
         'sim_files': tb_files,
         'files': filtered_files,
-        'include_dirs': include_dirs,
+        'include_dirs': list(include_dirs),
         'repository': url,
         'top_module': top_module,
         'extra_flags': [],
@@ -350,6 +359,12 @@ def main() -> None:
         type=str,
         help='URL of the processor repository',
     )
+    parser.add_argument(
+        '-n',
+        '--no-llama',
+        action='store_true',
+        help='Não utilizar o OLLAMA para identificar o módulo principal',
+    )
 
     args = parser.parse_args()
 
@@ -362,6 +377,7 @@ def main() -> None:
             args.add_config,
             args.plot_graph,
             args.path_config,
+            args.no_llama,
         )
 
     if args.generate_all_jenkinsfiles:
