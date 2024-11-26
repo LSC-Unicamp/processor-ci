@@ -26,11 +26,21 @@ module processorci_top (
     `endif
 );
 
-wire clk_core, reset_core, reset_o,
-    memory_read, memory_write;
+wire clk_core, reset_core, reset_o;
 
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
+wire o_data_mem_en;        // Sinal de habilitação de leitura da memória de dados
+wire o_data_mem_we;        // Sinal de habilitação de escrita da memória de dados
+wire [31:0] o_data_mem_addr; // Endereço da memória de dados
+wire [31:0] o_data_mem_data; // Dados a serem escritos na memória de dados
+wire [31:0] i_data_mem_data; // Dados lidos da memória de dados
+wire i_data_mem_valid;       // Sinal indicando que a memória de dados está pronta
+
+
+wire o_code_mem_en;        // Sinal de habilitação de leitura da memória de instruções
+wire [31:0] o_code_mem_addr; // Endereço da memória de instruções
+wire [31:0] i_code_mem_data; // Dados lidos da memória de instruções
+wire i_code_mem_valid;       // Sinal indicando que a memória de instruções está pronta
+
 
 
 Controller #(
@@ -68,33 +78,49 @@ Controller #(
     .clk_core  (clk_core),
     .reset_core(reset_core),
     
-    // main memory - instruction memory
-    .core_memory_response  (),
-    .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
-    .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (),
+    // Código de interligação entre Controller e aukv
+    .core_memory_response  (i_code_mem_valid),        // Resposta de memória de instruções
+    .core_read_memory      (o_code_mem_en),          // Habilitação de leitura de instruções
+    .core_write_memory     (1'b0),                   // Nenhuma escrita de instruções (fixo)
+    .core_address_memory   (o_code_mem_addr),        // Endereço de memória de instruções
+    .core_write_data_memory(32'h00000000),           // Sem escrita
+    .core_read_data_memory (i_code_mem_data),        // Dados lidos da memória de instruções
 
-    //sync main memory bus
+    //sync memory bus (não utilizado)
     .core_read_data_memory_sync     (),
     .core_memory_read_response_sync (),
     .core_memory_write_response_sync(),
 
     // Data memory
-    .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_memory_response_data  (i_data_mem_valid),  // Resposta de dados de memória
+    .core_read_memory_data      (o_data_mem_en),     // Habilitação de leitura de memória de dados
+    .core_write_memory_data     (o_data_mem_we),     // Habilitação de escrita de memória de dados
+    .core_address_memory_data   (o_data_mem_addr),   // Endereço de memória de dados
+    .core_write_data_memory_data(o_data_mem_data),   // Dados a serem escritos
+    .core_read_data_memory_data (i_data_mem_data)    // Dados lidos da memória de dados
 );
 
+aukv aukv_inst(
+    .i_clk          (clk_core),
+    .i_rstn         (~reset_core),       // Reset ativo baixo
+    .i_irq          (1'b0),              // IRQ fixo como inativo
+    .o_ack          (),                  // Sem interligação de ACK
 
-// Core space
+    // Sinais de memória de dados
+    .o_data_mem_en      (o_data_mem_en),
+    .o_data_mem_we      (o_data_mem_we),
+    .o_data_mem_addr    (o_data_mem_addr),
+    .o_data_mem_data    (o_data_mem_data),
+    .o_data_mem_strobe  (),              // Sem strobe
+    .i_data_mem_valid   (i_data_mem_valid),
+    .i_data_mem_data    (i_data_mem_data),
 
-
-
+    // Sinais de memória de instruções
+    .o_code_mem_en      (o_code_mem_en),
+    .o_code_mem_addr    (o_code_mem_addr),
+    .i_code_mem_data    (i_code_mem_data),
+    .i_code_mem_valid   (i_code_mem_valid)
+);
 
 // Clock inflaestructure
 
