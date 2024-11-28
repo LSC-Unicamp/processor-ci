@@ -26,24 +26,11 @@ module processorci_top (
     `endif
 );
 
-wire clk_core, reset_core,
-    memory_read, memory_write;
-
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
-
-// Instância do tinyriscv
-wire [31:0] m0_addr_i, m0_data_i, m0_data_o;
-wire m0_req_i, m0_we_i;
-wire [31:0] m1_addr_i, m1_data_o;
-wire rib_hold_flag_o;
-wire int_flag = 1'b0; // Sinal de interrupção fixo em 0
-wire jtag_reg_addr_o = 1'b0; // Ignorando sinais JTAG
-wire jtag_reg_data_o = 1'b0;
-wire jtag_reg_we_o = 1'b0;
-wire jtag_reg_data_i;
-wire jtag_halt_req_o = 1'b0;
-wire jtag_reset_req_o = 1'b0;
+// Sinais intermediários
+wire clk_core, reset_core;
+wire [31:0] core_read_data, core_write_data, address;
+wire [31:0] data_address, data_read, data_write;
+wire memory_req, memory_rw;
 
 // Instância do controlador
 Controller #(
@@ -83,47 +70,56 @@ Controller #(
     
     // Main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (1'b1),
-    .core_write_memory     (1'b0),
-    .core_address_memory   (m1_addr_i),
+    .core_read_memory      (1'b1), // Ler memória de instruções
+    .core_write_memory     (1'b0),        // Não escreve instruções
+    .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (m1_data_o),
+    .core_read_data_memory (core_read_data),
 
     // Sync main memory bus
     .core_read_data_memory_sync     (),
     .core_memory_read_response_sync (),
     .core_memory_write_response_sync(),
 
-    // Data memory
+
+    // Memória de dados
     .core_memory_response_data  (),
-    .core_read_memory_data      (m0_req_i & ~m0_we_i),
-    .core_write_memory_data     (m0_req_i & m0_we_i),
-    .core_address_memory_data   (m0_addr_i),
-    .core_write_data_memory_data(m0_data_i),
-    .core_read_data_memory_data (m0_data_o)
+    .core_read_memory_data      (memory_req & ~memory_rw),
+    .core_write_memory_data     (memory_req & memory_rw),
+    .core_address_memory_data   (data_address),
+    .core_write_data_memory_data(data_write),
+    .core_read_data_memory_data (data_read)
 );
 
 // Instância do tinyriscv
 tinyriscv u_tinyriscv (
-    .clk(clk_core), // Conectando clk_core como clock do processador
-    .rst(reset_core), // Conectando reset_core como reset do processador
-    .rib_ex_addr_o(m0_addr_i),
-    .rib_ex_data_i(m0_data_o),
-    .rib_ex_data_o(m0_data_i),
-    .rib_ex_req_o(m0_req_i),
-    .rib_ex_we_o(m0_we_i),
-    .rib_pc_addr_o(m1_addr_i),
-    .rib_pc_data_i(m1_data_o),
-    .jtag_reg_addr_i(jtag_reg_addr_o),
-    .jtag_reg_data_i(jtag_reg_data_o),
-    .jtag_reg_we_i(jtag_reg_we_o),
-    .jtag_reg_data_o(jtag_reg_data_i),
-    .rib_hold_flag_i(rib_hold_flag_o),
-    .jtag_halt_flag_i(jtag_halt_req_o),
-    .jtag_reset_flag_i(jtag_reset_req_o),
-    .int_i(int_flag)
-);
+    .clk(clk_core),
+    .rst(reset_core),
 
+    // Barramento de memória de dados
+    .rib_ex_addr_o(data_address),       // Endereço de dados
+    .rib_ex_data_i(data_read),          // Dados lidos
+    .rib_ex_data_o(data_write),         // Dados a escrever
+    .rib_ex_req_o(memory_req),         // Sinal de leitura
+    .rib_ex_we_o(memory_rw),         // Sinal de escrita
+
+    // Barramento de memória de instruções
+    .rib_pc_addr_o(address),            // Endereço de instruções
+    .rib_pc_data_i(core_read_data),     // Instrução lida
+
+    // Sinais JTAG (não utilizados aqui)
+    .jtag_reg_addr_i(5'b0),
+    .jtag_reg_data_i(32'b0),
+    .jtag_reg_we_i(1'b0),
+    .jtag_reg_data_o(),
+
+    .rib_hold_flag_i(1'b0),
+    .jtag_halt_flag_i(1'b0),
+    .jtag_reset_flag_i(1'b0),
+
+    // Interrupções
+    .int_i(32'b0)
+);
 // Clock infrastructure
 
 `ifdef HIGH_CLK

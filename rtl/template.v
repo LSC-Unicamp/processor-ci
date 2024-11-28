@@ -69,31 +69,31 @@ Controller #(
     .reset_core(reset_core),
     
     // main memory - instruction memory
-    .core_memory_response  (),
-    .core_read_memory      (memory_read),
-    .core_write_memory     (1'b0),
-    .core_address_memory   (address),
-    .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (),
+    .core_memory_response  (), // Memory response signal, 1 means that the memory operation is done
+    .core_read_memory      (memory_read), // Read memory signal
+    .core_write_memory     (1'b0), // Write memory signal
+    .core_address_memory   (address), // Address to read or write
+    .core_write_data_memory(32'h00000000), // Data to write
+    .core_read_data_memory (), // Data read from memory
 
     //sync main memory bus
-    .core_read_data_memory_sync     (),
+    .core_read_data_memory_sync     (), // Data read from memory
     .core_memory_read_response_sync (),
-    .core_memory_write_response_sync(),
+    .core_memory_write_response_sync(), 
 
     // Data memory
-    .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
-    .core_write_data_memory_data(data_write),
-    .core_read_data_memory_data (data_read)
+    .core_memory_response_data  (), // Memory response signal, 1 means that the memory operation is done
+    .core_read_memory_data      (memory_read), // Read memory signal
+    .core_write_memory_data     (memory_write), // Write memory signal
+    .core_address_memory_data   (data_address), // Address to read or write
+    .core_write_data_memory_data(data_write), // Data to write
+    .core_read_data_memory_data (data_read) // Data read from memory
 );
 
 
 // Core space
 
-
+// Core Instance
 
 
 // Clock inflaestructure
