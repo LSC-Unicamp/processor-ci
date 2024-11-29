@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                sh 'rm -rf riscv-steel'
-                sh 'git clone --recursive --depth=1 https://github.com/riscv-steel/riscv-steel riscv-steel'
+                sh 'rm -rf Grande-Risco-5'
+                sh 'git clone --recursive --depth=1 https://github.com/JN513/Grande-Risco-5 Grande-Risco-5'
             }
         }
 
@@ -13,8 +13,8 @@ pipeline {
 
         stage('Simulation') {
             steps {
-                dir("riscv-steel") {
-                    sh "/eda/oss-cad-suite/bin/iverilog -o simulation.out -g2005                  -s rvsteel_core  hardware/rvsteel_core.v "
+                dir("Grande-Risco-5") {
+                    sh "/eda/oss-cad-suite/bin/iverilog -o simulation.out -g2005                  -s Grande_Risco5  src/core/alu.v src/core/alu_control.v src/core/core.v src/core/forwarding_unit.v src/core/immediate_generator.v src/core/mux.v src/core/registers.v "
                 }
             }
         }
@@ -29,26 +29,26 @@ pipeline {
                     stages {
                         stage('Synthesis and PnR') {
                             steps {
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     echo 'Starting synthesis for FPGA colorlight_i9.'
                                 sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json \
-                                            -p riscv-steel -b colorlight_i9'
+                                            -p Grande-Risco-5 -b colorlight_i9'
                                 }
                             }
                         }
                         stage('Flash colorlight_i9') {
                             steps {
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     echo 'Flashing FPGA colorlight_i9.'
                                 sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json \
-                                            -p riscv-steel -b colorlight_i9 -l'
+                                            -p Grande-Risco-5 -b colorlight_i9 -l'
                                 }
                             }
                         }
                         stage('Test colorlight_i9') {
                             steps {
                                 echo 'Testing FPGA colorlight_i9.'
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     sh 'PYTHONPATH=/eda/processor-ci-communication PORT="/dev/ttyACM0" \
                                     python /eda/processor-ci-communication/run_tests.py'
                                 }
@@ -64,26 +64,26 @@ pipeline {
                     stages {
                         stage('Synthesis and PnR') {
                             steps {
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     echo 'Starting synthesis for FPGA digilent_nexys4_ddr.'
                                 sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json \
-                                            -p riscv-steel -b digilent_nexys4_ddr'
+                                            -p Grande-Risco-5 -b digilent_nexys4_ddr'
                                 }
                             }
                         }
                         stage('Flash digilent_nexys4_ddr') {
                             steps {
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     echo 'Flashing FPGA digilent_nexys4_ddr.'
                                 sh 'python3 /eda/processor-ci/main.py -c /eda/processor-ci/config.json \
-                                            -p riscv-steel -b digilent_nexys4_ddr -l'
+                                            -p Grande-Risco-5 -b digilent_nexys4_ddr -l'
                                 }
                             }
                         }
                         stage('Test digilent_nexys4_ddr') {
                             steps {
                                 echo 'Testing FPGA digilent_nexys4_ddr.'
-                                dir("riscv-steel") {
+                                dir("Grande-Risco-5") {
                                     sh 'PYTHONPATH=/eda/processor-ci-communication PORT="/dev/ttyUSB1" \
                                     python /eda/processor-ci-communication/run_tests.py'
                                 }

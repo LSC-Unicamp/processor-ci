@@ -154,7 +154,9 @@ def make_build_file(config: dict, board: str, toolchain_path: str) -> str:
         )
 
         for i in config['files']:
-            prefix = get_prefix(board, vhdl=i.endswith('.vhd'), sverilog=i.endswith('.sv'))
+            prefix = get_prefix(
+                board, vhdl=i.endswith('.vhd'), sverilog=i.endswith('.sv')
+            )
             file.write(prefix + f' {CURRENT_DIR}/' + i + '\n')
 
         file.write(base_config)

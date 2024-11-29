@@ -39,12 +39,13 @@
         "darkriscv": {
             "name": "darkriscv",
             "folder": "darkriscv",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/darkriscv.v"
             ],
-            "include_dirs": ["rtl"],
+            "include_dirs": [
+                "rtl"
+            ],
             "repository": "https://github.com/darklife/darkriscv",
             "top_module": "darkriscv",
             "extra_flags": [],
@@ -66,9 +67,7 @@
         "tinyriscv": {
             "name": "tinyriscv",
             "folder": "tinyriscv",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/core/clint.v",
                 "rtl/core/csr_reg.v",
@@ -95,9 +94,7 @@
         "AUK-V-Aethia": {
             "name": "AUK-V-Aethia",
             "folder": "AUK-V-Aethia",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/core/aukv.v",
                 "rtl/core/aukv_alu.v",
@@ -140,8 +137,7 @@
             ],
             "language_version": "2005",
             "top_module": "rv_core",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "include_dirs": [],
             "extra_flags": [],
             "enable": false
@@ -236,8 +232,7 @@
         "riscado-v": {
             "name": "riscado-v",
             "folder": "riscado-v",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "alu.v",
                 "control_unit.v",
@@ -255,8 +250,7 @@
         "rv3n": {
             "name": "rv3n",
             "folder": "rv3n",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/define.v",
                 "rtl/define_para.v",
@@ -275,7 +269,9 @@
                 "rtl/rv3n_stage_if.v",
                 "rtl/rv3n_top.v"
             ],
-            "include_dirs": ["rtl"],
+            "include_dirs": [
+                "rtl"
+            ],
             "repository": "https://github.com/risclite/rv3n",
             "top_module": "rv3n_top",
             "extra_flags": [],
@@ -284,8 +280,7 @@
         "riskow": {
             "name": "riskow",
             "folder": "riskow",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "cpu/alu.v",
                 "cpu/comp.v",
@@ -303,8 +298,7 @@
         "biriscv": {
             "name": "biriscv",
             "folder": "biriscv",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "src/core/biriscv_alu.v",
                 "src/core/biriscv_csr.v",
@@ -338,8 +332,7 @@
         "picorv32": {
             "name": "picorv32",
             "folder": "picorv32",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "picorv32.v"
             ],
@@ -352,8 +345,7 @@
         "dv-cpu-rv": {
             "name": "dv-cpu-rv",
             "folder": "dv-cpu-rv",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "core/rtl/rv_alu.v",
                 "core/rtl/rv_alu_ctrl.v",
@@ -377,9 +369,7 @@
         "neorv32": {
             "name": "neorv32",
             "folder": "neorv32",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/core/neorv32_application_image.vhd",
                 "rtl/core/neorv32_boot_rom.vhd",
@@ -495,9 +485,7 @@
         "Pequeno-Risco-5": {
             "name": "Pequeno-Risco-5",
             "folder": "Pequeno-Risco-5",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "src/alu.v",
                 "src/alu_control.v",
@@ -519,9 +507,7 @@
         "nerv": {
             "name": "nerv",
             "folder": "nerv",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "nerv.sv"
             ],
@@ -534,9 +520,7 @@
         "cv32e40p": {
             "name": "cv32e40p",
             "folder": "cv32e40p",
-            "sim_files": [
-
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/cv32e40p_aligner.sv",
                 "rtl/cv32e40p_alu.sv",
@@ -577,9 +561,7 @@
         "ibex": {
             "name": "ibex",
             "folder": "ibex",
-            "sim_files": [
-                
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/ibex_alu.sv",
                 "rtl/ibex_branch_predict.sv",
@@ -621,8 +603,7 @@
         "RV12": {
             "name": "RV12",
             "folder": "RV12",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/verilog/ahb3lite/biu_ahb3lite.sv",
                 "rtl/verilog/ahb3lite/riscv_top_ahb3lite.sv",
@@ -687,8 +668,7 @@
         "scr1": {
             "name": "scr1",
             "folder": "scr1",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "src/core/scr1_clk_ctrl.sv",
                 "src/core/scr1_core_top.sv",
@@ -713,7 +693,9 @@
                 "src/core/primitives/scr1_cg.sv",
                 "src/core/primitives/scr1_reset_cells.sv"
             ],
-            "include_dirs": ["src/includes"],
+            "include_dirs": [
+                "src/includes"
+            ],
             "repository": "https://github.com/syntacore/scr1",
             "top_module": "scr1_core_top",
             "extra_flags": [],
@@ -722,8 +704,7 @@
         "Cores-SweRV": {
             "name": "Cores-SweRV",
             "folder": "Cores-SweRV",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_wrapper.v",
@@ -769,7 +750,9 @@
                 "design/lsu/lsu_lsc_ctl.sv",
                 "design/lsu/lsu_trigger.sv"
             ],
-            "include_dirs": ["design/include"],
+            "include_dirs": [
+                "design/include"
+            ],
             "repository": "https://github.com/chipsalliance/Cores-SweRV",
             "top_module": "veer",
             "extra_flags": [],
@@ -778,8 +761,7 @@
         "Cores-SweRV-EL2": {
             "name": "Cores-SweRV-EL2",
             "folder": "Cores-SweRV-EL2",
-            "sim_files": [  
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_mux.v",
@@ -829,7 +811,9 @@
                 "design/lsu/el2_lsu_lsc_ctl.sv",
                 "design/lsu/el2_lsu_trigger.sv"
             ],
-            "include_dirs": ["design/include"],
+            "include_dirs": [
+                "design/include"
+            ],
             "repository": "https://github.com/chipsalliance/Cores-SweRV-EL2",
             "top_module": "el2_veer",
             "extra_flags": [],
@@ -838,8 +822,7 @@
         "Cores-SweRV-EH2": {
             "name": "Cores-SweRV-EH2",
             "folder": "Cores-SweRV-EH2",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_wrapper.v",
@@ -888,7 +871,9 @@
                 "design/lsu/eh2_lsu_lsc_ctl.sv",
                 "design/lsu/eh2_lsu_trigger.sv"
             ],
-            "include_dirs": ["design/include"],
+            "include_dirs": [
+                "design/include"
+            ],
             "repository": "https://github.com/chipsalliance/Cores-SweRV-EH2",
             "top_module": "eh2_veer",
             "extra_flags": [],
@@ -897,8 +882,7 @@
         "RPU": {
             "name": "RPU",
             "folder": "RPU",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "vhdl/constants.vhd",
                 "vhdl/alu_int32_div.vhd",
@@ -921,8 +905,7 @@
         "Taiga": {
             "name": "Taiga",
             "folder": "Taiga",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "core/addr_hash.sv",
                 "core/alu_unit.sv",
@@ -998,8 +981,7 @@
         "maestro": {
             "name": "maestro",
             "folder": "maestro",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "Project/Components/ALU.vhd",
                 "Project/Components/EX_MEM_DIV.vhd",
@@ -1036,8 +1018,7 @@
         "rsd": {
             "name": "rsd",
             "folder": "rsd",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "Processor/Src/BasicMacros.sv",
                 "Processor/Src/BasicTypes.sv",
@@ -1208,8 +1189,7 @@
         "kronos": {
             "name": "kronos",
             "folder": "kronos",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/core/kronos_EX.sv",
                 "rtl/core/kronos_ID.sv",
@@ -1234,8 +1214,7 @@
         "RS5": {
             "name": "RS5",
             "folder": "RS5",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/CSRBank.sv",
                 "rtl/RS5.sv",
@@ -1262,7 +1241,9 @@
                 "rtl/aes/riscv_crypto_sbox_aes_top.sv",
                 "rtl/aes/riscv_crypto_sbox_inv_mid.sv"
             ],
-            "include_dirs": ["rtl/"],
+            "include_dirs": [
+                "rtl/"
+            ],
             "repository": "https://github.com/gaph-pucrs/RS5",
             "top_module": "RS5",
             "extra_flags": [],
@@ -1271,8 +1252,7 @@
         "e203_hbirdv2": {
             "name": "e203_hbirdv2",
             "folder": "e203_hbirdv2",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/e203/core/config.v",
                 "rtl/e203/core/e203_biu.v",
@@ -1351,8 +1331,7 @@
         "Cores-VeeR-EH2": {
             "name": "Cores-VeeR-EH2",
             "folder": "Cores-VeeR-EH2",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_wrapper.v",
@@ -1410,8 +1389,7 @@
         "Cores-VeeR-EL2": {
             "name": "Cores-VeeR-EL2",
             "folder": "Cores-VeeR-EL2",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_mux.v",
@@ -1471,8 +1449,7 @@
         "Cores-VeeR-EH1": {
             "name": "Cores-VeeR-EH1",
             "folder": "Cores-VeeR-EH1",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "design/dmi/dmi_jtag_to_core_sync.v",
                 "design/dmi/dmi_wrapper.v",
@@ -1529,8 +1506,7 @@
         "mriscv": {
             "name": "mriscv",
             "folder": "mriscv",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "mriscvcore/mriscvcore.v",
                 "mriscvcore/ALU/ALU.v",
@@ -1551,8 +1527,7 @@
         "serv": {
             "name": "serv",
             "folder": "serv",
-            "sim_files": [
-            ],
+            "sim_files": [],
             "files": [
                 "rtl/serv_aligner.v",
                 "rtl/serv_alu.v",
@@ -1578,11 +1553,11 @@
             "extra_flags": [],
             "language_version": "2005"
         },
-        "VexRiscv":{
-            "name":"VexRiscv",
-            "folder":"VexRiscv",
-            "sim_files":[],
-            "files":[
+        "VexRiscv": {
+            "name": "VexRiscv",
+            "folder": "VexRiscv",
+            "sim_files": [],
+            "files": [
                 "VexRiscv.v"
             ],
             "include_dirs": [],
@@ -1591,6 +1566,25 @@
             "extra_flags": [],
             "language_version": "2005",
             "pre_script": "sbt \"runMain vexriscv.demo.GenFull\""
+        },
+        "Grande-Risco-5": {
+            "name": "Grande-Risco-5",
+            "folder": "Grande-Risco-5",
+            "sim_files": [],
+            "files": [
+                "src/core/alu.v",
+                "src/core/alu_control.v",
+                "src/core/core.v",
+                "src/core/forwarding_unit.v",
+                "src/core/immediate_generator.v",
+                "src/core/mux.v",
+                "src/core/registers.v"
+            ],
+            "include_dirs": [],
+            "repository": "https://github.com/JN513/Grande-Risco-5",
+            "top_module": "Grande_Risco5",
+            "extra_flags": [],
+            "language_version": "2005"
         }
     }
 }
