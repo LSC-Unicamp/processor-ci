@@ -69,8 +69,8 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (instruction_response), // Memory response signal, 1 means that the memory operation is done
-    .core_read_memory      (1'b0),                 // Read memory signal
-    .core_write_memory     (1'b1),                 // Write memory signal
+    .core_read_memory      (1'b1),                 // Read memory signal
+    .core_write_memory     (1'b0),                 // Write memory signal
     .core_address_memory   (instruction_address),  // Address to read or write
     .core_write_data_memory(32'h00000000),         // Data to write
     .core_read_data_memory (instruction_data),     // Data read from memory
