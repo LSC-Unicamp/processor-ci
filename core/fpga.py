@@ -79,7 +79,7 @@ def get_macros(board: str) -> str:
     return '-tclargs "ID=0x6a6a6a6a" "CLOCK_FREQ=50000000" "MEMORY_SIZE=4096"'
 
 
-def get_prefix(board: str, vhdl: bool) -> str:
+def get_prefix(board: str, vhdl: bool, sverilog: bool) -> str:
     """
     Determines the file prefix command based on the target board and file type.
 
@@ -99,6 +99,8 @@ def get_prefix(board: str, vhdl: bool) -> str:
         return 'read_vhdl'
 
     if board == 'colorlight_i9':
+        if sverilog:
+            return 'yosys read_verilog -sv'
         return 'yosys read_verilog'
 
     return 'read_verilog'
@@ -145,14 +147,14 @@ def make_build_file(config: dict, board: str, toolchain_path: str) -> str:
     final_config_path = CURRENT_DIR + f'/build_{board}.tcl'
 
     with open(final_config_path, 'w', encoding='utf-8') as file:
-        prefix = get_prefix(board, False)
+        prefix = get_prefix(board, False, False)
         file.write(
             prefix
             + f' {toolchain_path}/processor-ci/rtl/{config["folder"]}.v\n'
         )
 
         for i in config['files']:
-            prefix = get_prefix(board, i.endswith('.vhd'))
+            prefix = get_prefix(board, vhdl=i.endswith('.vhd'), sverilog=i.endswith('.sv'))
             file.write(prefix + f' {CURRENT_DIR}/' + i + '\n')
 
         file.write(base_config)
