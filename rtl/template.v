@@ -70,10 +70,10 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (), // Memory response signal, 1 means that the memory operation is done
-    .core_read_memory      (memory_read), // Read memory signal
-    .core_write_memory     (1'b0), // Write memory signal
-    .core_address_memory   (address), // Address to read or write
-    .core_write_data_memory(32'h00000000), // Data to write
+    .core_read_memory      (), // Read memory signal
+    .core_write_memory     (), // Write memory signal
+    .core_address_memory   (), // Address to read or write
+    .core_write_data_memory(), // Data to write
     .core_read_data_memory (), // Data read from memory
 
     //sync main memory bus
@@ -83,11 +83,11 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (), // Memory response signal, 1 means that the memory operation is done
-    .core_read_memory_data      (memory_read), // Read memory signal
-    .core_write_memory_data     (memory_write), // Write memory signal
-    .core_address_memory_data   (data_address), // Address to read or write
-    .core_write_data_memory_data(data_write), // Data to write
-    .core_read_data_memory_data (data_read) // Data read from memory
+    .core_read_memory_data      (), // Read memory signal
+    .core_write_memory_data     (), // Write memory signal
+    .core_address_memory_data   (), // Address to read or write
+    .core_write_data_memory_data(), // Data to write
+    .core_read_data_memory_data () // Data read from memory
 );
 
 

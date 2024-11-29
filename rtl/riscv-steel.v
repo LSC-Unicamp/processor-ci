@@ -27,10 +27,9 @@ module processorci_top (
 );
 
 wire clk_core, reset_core, reset_o,
-    memory_read, memory_write;
+    memory_read, memory_write, read_response, write_response;
 
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
+wire [31:0] core_read_data, core_write_data, address;
 
 
 Controller #(

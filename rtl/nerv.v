@@ -70,7 +70,7 @@ Controller #(
     
     // main memory - instruction memory
     .core_memory_response  (),
-    .core_read_memory      (memory_read),
+    .core_read_memory      (1'b1),
     .core_write_memory     (1'b0),
     .core_address_memory   (address),
     .core_write_data_memory(32'h00000000),
@@ -83,7 +83,7 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
+    .core_read_memory_data      (1'b1),
     .core_write_memory_data     (memory_write),
     .core_address_memory_data   (data_address),
     .core_write_data_memory_data(data_write),
@@ -93,8 +93,21 @@ Controller #(
 
 // Core space
 
+nerv cpu (
+    .clock     (clk_core),
+    .reset     (reset_core     ),
+    .stall     (1'b0     ),
+    .trap      (          ),
 
+    .imem_addr (address ),
+    .imem_data (core_read_data ),
 
+    .dmem_valid(memory_write),
+    .dmem_addr (data_address ),
+    .dmem_wstrb(),
+    .dmem_wdata(data_write),
+    .dmem_rdata(data_read)
+);
 
 // Clock inflaestructure
 

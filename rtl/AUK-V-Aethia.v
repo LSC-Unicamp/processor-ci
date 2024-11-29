@@ -93,8 +93,8 @@ Controller #(
 
     // Data memory
     .core_memory_response_data  (i_data_mem_valid),  // Resposta de dados de memória
-    .core_read_memory_data      (o_data_mem_en),     // Habilitação de leitura de memória de dados
-    .core_write_memory_data     (o_data_mem_we),     // Habilitação de escrita de memória de dados
+    .core_read_memory_data      (o_data_mem_en & ~o_data_mem_we),     // Habilitação de leitura de memória de dados
+    .core_write_memory_data     (o_data_mem_en & o_data_mem_we),     // Habilitação de escrita de memória de dados
     .core_address_memory_data   (o_data_mem_addr),   // Endereço de memória de dados
     .core_write_data_memory_data(o_data_mem_data),   // Dados a serem escritos
     .core_read_data_memory_data (i_data_mem_data)    // Dados lidos da memória de dados

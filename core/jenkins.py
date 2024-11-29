@@ -56,7 +56,7 @@ pipeline {{
         stage('Git Clone') {{
             steps {{
                 sh 'rm -rf {folder}'
-                sh 'git clone --recursive {repository} {folder}'
+                sh 'git clone --recursive --depth=1 {repository} {folder}'
             }}
         }}
 

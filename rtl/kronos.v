@@ -26,11 +26,18 @@ module processorci_top (
     `endif
 );
 
-wire clk_core, reset_core, reset_o,
-    memory_read, memory_write;
+wire clk_core, reset_core, reset_o;
 
-wire [31:0] core_read_data, core_write_data, address,
-    data_address, data_read, data_write;
+// Definição de fios
+wire [31:0] instr_data, data_read, data_write;
+wire [31:0] address_instr, address_data;
+wire        instr_req, instr_ack;
+wire        data_req, data_ack;
+wire [3:0]  data_mask;
+wire        data_wr_en, rw;
+wire        core_memory_response, core_read_memory, core_write_memory;
+wire        core_memory_response_data, core_read_memory_data, core_write_memory_data;
+
 
 
 Controller #(
@@ -69,23 +76,19 @@ Controller #(
     .reset_core(reset_core),
     
     // main memory - instruction memory
-    .core_memory_response  (),
-    .core_read_memory      (memory_read),
+    // Instruções
+    .core_memory_response  (instr_ack),
+    .core_read_memory      (instr_req),
     .core_write_memory     (1'b0),
-    .core_address_memory   (address),
+    .core_address_memory   (address_instr),
     .core_write_data_memory(32'h00000000),
-    .core_read_data_memory (),
+    .core_read_data_memory (instr_data),
 
-    //sync main memory bus
-    .core_read_data_memory_sync     (),
-    .core_memory_read_response_sync (),
-    .core_memory_write_response_sync(),
-
-    // Data memory
-    .core_memory_response_data  (),
-    .core_read_memory_data      (memory_read),
-    .core_write_memory_data     (memory_write),
-    .core_address_memory_data   (data_address),
+    // Dados
+    .core_memory_response_data  (data_ack),
+    .core_read_memory_data      (data_req & ~data_wr_en),
+    .core_write_memory_data     (data_req & data_wr_en),
+    .core_address_memory_data   (address_data),
     .core_write_data_memory_data(data_write),
     .core_read_data_memory_data (data_read)
 );
@@ -93,7 +96,39 @@ Controller #(
 
 // Core space
 
+// Instância do processador kronos_core
+kronos_core #(
+    .BOOT_ADDR            (32'h00000000),
+    .FAST_BRANCH          (1'b1),
+    .EN_COUNTERS          (1'b1),
+    .EN_COUNTERS64B       (1'b1),
+    .CATCH_ILLEGAL_INSTR  (1'b1),
+    .CATCH_MISALIGNED_JMP (1'b1),
+    .CATCH_MISALIGNED_LDST(1'b1)
+) kronos_core_inst (
+    .clk            (clk_core),
+    .rstz           (~reset_core),
 
+    // Interface de instruções
+    .instr_addr     (address_instr),
+    .instr_data     (instr_data),
+    .instr_req      (instr_req),
+    .instr_ack      (instr_ack),
+
+    // Interface de dados
+    .data_addr      (address_data),
+    .data_rd_data   (data_read),
+    .data_wr_data   (data_write),
+    .data_mask      (data_mask),
+    .data_wr_en     (data_wr_en),
+    .data_req       (data_req),
+    .data_ack       (data_ack),
+
+    // Interrupções
+    .software_interrupt(1'b0),
+    .timer_interrupt   (1'b0),
+    .external_interrupt(1'b0)
+);
 
 
 // Clock inflaestructure

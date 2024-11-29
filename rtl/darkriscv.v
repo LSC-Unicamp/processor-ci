@@ -110,7 +110,9 @@ darkriscv #(
     .DRW (), // memory read write
     .DRD (memory_read),
     .DWR (memory_write),
-    .DAS () // memory address strobe
+    .DAS (), // memory address strobe
+
+    .BERR(1'b0), // bus error
 );
 
 // Clock inflaestructure
