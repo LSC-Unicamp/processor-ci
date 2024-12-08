@@ -1,3 +1,5 @@
+"""Gera arquivos .dot a partir de um JSON com informações de um grafo."""
+
 import json
 
 
@@ -15,6 +17,7 @@ def generate_dot(graph, graph_name):
 
 
 def main(json_input):
+    """Função principal para gerar os arquivos .dot a partir de um JSON."""
     # Carregar o JSON
     data = json.loads(json_input)
 
@@ -27,10 +30,10 @@ def main(json_input):
     )
 
     # Salvar os arquivos .dot
-    with open('module_graph.dot', 'w') as f:
+    with open('module_graph.dot', 'w', encoding='utf-8') as f:
         f.write(module_graph_dot)
 
-    with open('module_graph_inverse.dot', 'w') as f:
+    with open('module_graph_inverse.dot', 'w', encoding='utf-8') as f:
         f.write(module_graph_inverse_dot)
 
 

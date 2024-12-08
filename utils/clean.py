@@ -1,20 +1,21 @@
+"""Main function to remove unwanted keys from config.json"""
 import json
 
-# Carregar o JSON do arquivo config.json
-with open('config.json', 'r') as file:
+# Load the JSON from the config.json file
+with open('config.json', 'r', encoding='utf-8') as file:
     data = json.load(file)
 
-# Remover as chaves indesejadas
+# Remove the unwanted keys
 for core in data['cores'].values():
     core.pop('modules', None)
     core.pop('module_graph', None)
     core.pop('module_graph_inverse', None)
     core.pop('non_tb_files', None)
 
-# Salvar o resultado em config2.json
-with open('config2.json', 'w') as file:
+# Save the new JSON to a new file
+with open('config2.json', 'w', encoding='utf-8') as file:
     json.dump(data, file, indent=4)
 
 print(
-    'As chaves indesejadas foram removidas e o novo arquivo foi salvo como config2.json.'
+    'The unwanted keys have been removed and the new file has been saved as config2.json.'
 )
