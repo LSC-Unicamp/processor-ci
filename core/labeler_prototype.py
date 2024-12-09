@@ -104,6 +104,8 @@ def determine_cpu_bits(top_file):
         with open(top_file, 'r', encoding='utf-8') as file:
             content = file.read()
 
+        count_32 = 0
+        count_64 = 0
         # Count occurrences of [31:0] and [63:0] for Verilog/SystemVerilog
         if top_file.endswith('.v') or top_file.endswith('.sv'):
             count_32 = len(re.findall(r'\[31:0\]', content))
