@@ -53,13 +53,25 @@ def identify_license_type(license_content):
         # Permissive Licenses
         'MIT': r'(?i)permission is hereby granted, free of charge, to any person obtaining a copy',
         'Apache 2.0': r'(?i)licensed under the Apache License, Version 2\.0',
-        'BSD 3-Clause': r'(?i)neither the name of the copyright holder nor the names of its\s+contributors may be used to endorse or promote products derived from\s+this software without specific prior written permission\.',
-        'Zlib': r'(?i)This software is provided \'as-is\', without any express or implied warranty',
-        'Unlicense': r'(?i)This is free and unencumbered software released into the public domain',
+        'BSD 3-Clause': (
+            r'(?i)neither the name of the copyright holder nor the names of its\s+contributors '
+            r'may be used to endorse or promote products derived from\s+this '
+            r'software without specific prior written permission\.'
+        ),
+        'Zlib': (
+            r'(?i)This software is provided \'as-is\', without any express or implied warranty'
+        ),
+        'Unlicense': (
+            r'(?i)This is free and unencumbered software released into the public domain'
+        ),
         # CERN Open Hardware Licenses
         'CERN Open Hardware Licence v2 - Permissive': r'(?i)The CERN-OHL-P is copyright CERN 2020.',
-        'CERN Open Hardware Licence v2 - Weakly Reciprocal': r'(?i)The CERN-OHL-W is copyright CERN 2020.',
-        'CERN Open Hardware Licence v2 - Strongly Reciprocal': r'(?i)The CERN-OHL-S is copyright CERN 2020.',
+        'CERN Open Hardware Licence v2 - Weakly Reciprocal': (
+            r'(?i)The CERN-OHL-W is copyright CERN 2020.'
+        ),
+        'CERN Open Hardware Licence v2 - Strongly Reciprocal': (
+            r'(?i)The CERN-OHL-S is copyright CERN 2020.'
+        ),
         # Copyleft Licenses
         'GPLv2': r'(?i)GNU GENERAL PUBLIC LICENSE\s*Version 2',
         'GPLv3': r'(?i)GNU GENERAL PUBLIC LICENSE\s*Version 3',
@@ -69,12 +81,26 @@ def identify_license_type(license_content):
         'Eclipse Public License': r'(?i)Eclipse Public License - v [0-9]\.[0-9]',
         # Creative Commons Licenses
         'CC0': r'(?i)Creative Commons Zero',
-        'Creative Commons Attribution (CC BY)': r'(?i)This work is licensed under a Creative Commons Attribution',
-        'Creative Commons Attribution-ShareAlike (CC BY-SA)': r'(?i)This work is licensed under a Creative Commons Attribution-ShareAlike',
-        'Creative Commons Attribution-NoDerivatives (CC BY-ND)': r'(?i)This work is licensed under a Creative Commons Attribution-NoDerivatives',
-        'Creative Commons Attribution-NonCommercial (CC BY-NC)': r'(?i)This work is licensed under a Creative Commons Attribution-NonCommercial',
-        'Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)': r'(?i)This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike',
-        'Creative Commons Attribution-NonCommercial-NoDerivatives (CC BY-NC-ND)': r'(?i)This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives',
+        'Creative Commons Attribution (CC BY)': (
+            r'(?i)This work is licensed under a Creative Commons Attribution'
+        ),
+        'Creative Commons Attribution-ShareAlike (CC BY-SA)': (
+            r'(?i)This work is licensed under a Creative Commons Attribution-ShareAlike'
+        ),
+        'Creative Commons Attribution-NoDerivatives (CC BY-ND)': (
+            r'(?i)This work is licensed under a Creative Commons Attribution-NoDerivatives'
+        ),
+        'Creative Commons Attribution-NonCommercial (CC BY-NC)': (
+            r'(?i)This work is licensed under a Creative Commons Attribution-NonCommercial'
+        ),
+        'Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA)': (
+            r'(?i)This work is licensed under a Creative Commons '
+            r'Attribution-NonCommercial-ShareAlike'
+        ),
+        'Creative Commons Attribution-NonCommercial-NoDerivatives (CC BY-NC-ND)': (
+            r'(?i)This work is licensed under a Creative Commons '
+            r'Attribution-NonCommercial-NoDerivatives'
+        ),
         # Public Domain
         'Public Domain': r'(?i)dedicated to the public domain',
         # Proprietary Licenses
